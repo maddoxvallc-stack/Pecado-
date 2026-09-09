@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+ <radialGradient id="bg"><stop stop-color="#4b123f"/><stop offset="1" stop-color="#09060b"/></radialGradient>
+ <linearGradient id="flame" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#ff287d"/><stop offset=".55" stop-color="#a21cff"/><stop offset="1" stop-color="#ff6ab0"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<path filter="url(#glow)" fill="url(#flame)" d="M256 72c22 63-20 78 39 122 39 29 65 67 65 113 0 72-47 128-104 128s-104-56-104-128c0-55 31-94 73-126 34-26 47-55 31-109 45 31 69 61 68 101 24-29 31-58 32-101z"/>
+<text x="256" y="476" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="900" letter-spacing="7">PÉCADO</text>
+</svg>

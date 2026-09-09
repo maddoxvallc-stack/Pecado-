@@ -1,0 +1,19 @@
+{
+  "name": "PÉCADO — Verdad • Deseo • Trago",
+  "short_name": "PÉCADO",
+  "description": "Juego de pareja: verdad, deseo y trago.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#09060b",
+  "theme_color": "#19091d",
+  "orientation": "portrait",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
