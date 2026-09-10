@@ -85,11 +85,12 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
 .question{font-size:28px;line-height:1.34;font-weight:800;margin:18px 3px 25px}
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .drink{background:linear-gradient(135deg,#6d1111,#d93636)}
+.complete{background:linear-gradient(135deg,#7d1cff,#ff287d)}
 .skip{background:#342038}.next{background:linear-gradient(135deg,#ff287d,#a21cff)}
 .back{background:transparent;border:1px solid #56304f;color:#c9a9c1;font-size:12px}
 .counter{text-align:center;color:#8f7189;font-size:12px;margin-top:14px}
 .stats{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0
 }
 .stat{background:#150b17;border:1px solid #352039;border-radius:15px;padding:12px;text-align:center}
 .stat b{display:block;font-size:20px}.stat span{font-size:10px;color:#a9849e}
@@ -119,7 +120,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
 <div class="container">
   <div class="brand">
     <div class="logo">PÉCADO</div>
-    <div class="tagline">Verdad • Deseo • Trago 🔥</div>
+    <div class="tagline">Verdad • Deseo • Trago • Retos 🔥</div>
   </div>
 
   <div class="card">
@@ -154,6 +155,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
       <button class="category pasado" onclick="chooseCategory('past')">🔥 PASADO<small>Secretos • Experiencias • Primeras veces</small></button>
       <button class="category deseo" onclick="chooseCategory('desire')">😈 DESEO<small>Fantasías • Atracción • Curiosidad</small></button>
       <button class="category trago" onclick="chooseCategory('drink')">🍷 TRAGO<small>Retos • Confesiones • Castigos</small></button>
+      <button class="category dare" onclick="chooseCategory('dare')">🔥 RETO<small>Coqueteo • Atrevimiento • Pareja • Grupo</small></button>
       <button class="back" onclick="goHome()">← VOLVER</button>
     </section>
 
@@ -177,6 +179,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
         <div class="action-row">
           <button class="drink" onclick="takeDrink()">🍷 BEBER</button>
           <button class="skip" onclick="skipQuestion()">SALTAR</button>
+          <button id="completeDareBtn" class="complete hidden" onclick="completeDare()">🔥 CUMPLIDO</button>
         </div>
         <button class="next" onclick="nextQuestion()">SIGUIENTE 🔥</button>
         <div class="counter" id="counter"></div>
@@ -200,6 +203,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
         <div class="stat"><b id="statQuestions">0</b><span>PREGUNTAS</span></div>
         <div class="stat"><b id="statDrinks">0</b><span>TRAGOS</span></div>
         <div class="stat"><b id="statSkips">0</b><span>SALTOS</span></div>
+        <div class="stat"><b id="statDares">0</b><span>RETOS</span></div>
       </div>
       <button class="primary" onclick="newGame()">🔥 JUGAR OTRA VEZ</button>
       <button class="back" onclick="goHome()">← INICIO</button>
@@ -719,7 +723,77 @@ pecado: [
 "BONUS: cada uno confiesa un secreto que nunca le había contado al otro."
 ]
 
-}
+},
+
+
+dare: {
+  warm: [
+    "Mira a tu pareja a los ojos durante 20 segundos sin hablar.",
+    "Dale a tu pareja un beso lento de 10 segundos.",
+    "Susúrrale al oído una cosa que te atrae muchísimo de ella.",
+    "Hazle un baile seductor de 20 segundos.",
+    "Dale tres besos: uno tierno, uno atrevido y uno sorpresa.",
+    "Deja que tu pareja elija dónde recibirás un beso.",
+    "Acércate a tu pareja y dile qué detalle suyo te vuelve loco/a.",
+    "Dale un abrazo de 30 segundos sin decir nada.",
+    "Haz contacto visual mientras tu pareja te dice algo que le encanta de ti.",
+    "Deja que tu pareja te dé un beso sorpresa en la mejilla, cuello u hombro.",
+    "Imita durante 15 segundos cómo coqueteas cuando alguien te gusta.",
+    "Dile a tu pareja una fantasía romántica que nunca le hayas contado.",
+    "Toma la mano de tu pareja y dile qué momento entre ustedes recuerdas con más cariño.",
+    "Dale a tu pareja cinco besos rápidos sin repetir el lugar.",
+    "Haz una pose sexy para tu pareja durante 10 segundos.",
+    "Deja que tu pareja escoja una palabra que tendrás que susurrarle tres veces.",
+    "Acércate mucho a tu pareja y dile algo que normalmente te daría vergüenza decir.",
+    "Dale un cumplido que sea completamente sobre su atractivo.",
+    "Baila pegado/a a tu pareja durante 20 segundos.",
+    "Dile al oído cuál es tu parte favorita de una cita con ella."
+  ],
+  spicy: [
+    "Besa a tu pareja lentamente durante 20 segundos.",
+    "Deja que tu pareja te dé tres besos donde ella elija.",
+    "Susúrrale al oído la fantasía que más curiosidad te da vivir con ella.",
+    "Haz un baile muy seductor para tu pareja durante 30 segundos.",
+    "Deja que tu pareja te acerque hacia ella como quiera durante 10 segundos.",
+    "Mírala fijamente mientras le dices qué parte de su apariencia te resulta más irresistible.",
+    "Dale un beso y detente justo antes de volver a besarla; repítelo tres veces.",
+    "Deja que tu pareja elija una zona no íntima para recibir un beso lento.",
+    "Representa cómo intentarías seducir a tu propia pareja si acabaran de conocerse.",
+    "Susúrrale una frase que te gustaría escuchar de ella en un momento íntimo.",
+    "Hazle un masaje de hombros durante 30 segundos mientras mantienes contacto visual.",
+    "Dile tres cosas que te gustaría experimentar juntos algún día.",
+    "Deja que tu pareja elija: beso largo o baile privado.",
+    "Acércate a su oído y describe una cita ideal que terminaría muy cerca de ella.",
+    "Dale un beso lento en el cuello o la clavícula.",
+    "Deja que tu pareja te haga una pregunta atrevida y responde sin esquivarla.",
+    "Haz una mirada que usarías para dejarle claro a alguien que te atrae.",
+    "Dile a tu pareja qué momento entre ustedes te ha parecido más tentador.",
+    "Durante 30 segundos, solo puedes comunicarte con miradas y gestos seductores.",
+    "Deja que tu pareja decida entre un beso apasionado, un abrazo intenso o un baile pegado."
+  ],
+  pecado: [
+    "Deja que tu pareja elija entre un beso prolongado, un baile privado o una confesión atrevida.",
+    "Mírala fijamente durante 30 segundos y dile exactamente qué te resulta irresistible de ella.",
+    "Susúrrale al oído una fantasía que jamás te hayas atrevido a contarle.",
+    "Haz un baile lento y provocador exclusivamente para tu pareja durante 45 segundos.",
+    "Deja que tu pareja te dé cinco besos donde ella decida, evitando la boca si así lo prefiere.",
+    "Representa una escena de seducción entre ustedes como si fuera su primera noche juntos.",
+    "Dile tres cosas que te gustaría que tu pareja hiciera para sorprenderte en una cita privada.",
+    "Deja que tu pareja elija una pregunta de cualquier categoría y debes responderla sin pasarla.",
+    "Acércate hasta quedar frente a frente y mantén el contacto visual mientras se turnan para decir una cosa que desean del otro.",
+    "Dale un beso lento y luego dile qué fue lo primero que te atrajo de ella.",
+    "Deja que tu pareja decida: confesión atrevida, beso largo o reto sorpresa.",
+    "Susúrrale una invitación imaginaria para una noche perfecta juntos.",
+    "Durante 45 segundos, intenta hacer que tu pareja se ponga nerviosa usando solo palabras y miradas.",
+    "Dile cuál es la situación más atrevida que te gustaría vivir con tu pareja algún día.",
+    "Deja que tu pareja elija una prenda o accesorio que debes usar de una manera divertida y seductora por el resto de la ronda.",
+    "Haz una declaración de deseo romántico sin usar las palabras amor, beso o sexo.",
+    "Dile a tu pareja cuál ha sido tu momento de mayor tensión romántica con ella.",
+    "Deja que tu pareja te dé un beso sorpresa y después describe en una frase qué te hizo sentir.",
+    "Haz una mini escena de 'primera cita' intentando conquistar a tu propia pareja en 60 segundos.",
+    "PÉCADO: elige una de estas tres: confesión secreta, beso prolongado o reto elegido por tu pareja."
+  ]
+},
 
 };
 
@@ -734,12 +808,14 @@ let currentIntensity = "";
 let questionNumber = 0;
 let drinkCount = 0;
 let skipCount = 0;
+let dareCount = 0;
 let sessionStarted = false;
 
 let usedQuestions = {
   past:{warm:[],spicy:[],pecado:[]},
   desire:{warm:[],spicy:[],pecado:[]},
-  drink:{warm:[],spicy:[],pecado:[]}
+  drink:{warm:[],spicy:[],pecado:[]},
+  dare:{warm:[],spicy:[],pecado:[]}
 };
 
 const mechanics = {
@@ -816,14 +892,14 @@ function finishSetup(){
     return;
   }
   players=vals;
-  currentPlayer=0; questionNumber=0; drinkCount=0; skipCount=0; sessionStarted=true;
+  currentPlayer=0; questionNumber=0; drinkCount=0; skipCount=0; dareCount=0; sessionStarted=true;
   usedQuestions = freshUsed();
   saveGame();
   showScreen("categoryScreen");
 }
 
 function freshUsed(){
-  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]}};
+  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]},dare:{warm:[],spicy:[],pecado:[]}};
 }
 
 function showCategoryScreen(){showScreen("categoryScreen")}
@@ -838,13 +914,19 @@ function chooseIntensity(intensity){
 
 function getQuestions(){return questions[currentCategory][currentIntensity]}
 function getCategoryName(){
-  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO"}[currentCategory];
+  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO",dare:"🔥 RETO"}[currentCategory];
 }
 function getIntensityName(){
   return {warm:"🌶️ CALIENTE",spicy:"🌶️🌶️ MUY PICANTE",pecado:"🌶️🌶️🌶️ PÉCADO"}[currentIntensity];
 }
 
 function getMechanic(){
+  if(currentCategory==="dare") {
+    const pool = mode==="couple"
+      ? {warm:["RETO","PAREJA ELIGE"],spicy:["RETO","PAREJA ELIGE","DUELO"],pecado:["RETO","PAREJA ELIGE","PÉCADO","DUELO"]}[currentIntensity]
+      : {warm:["RETO","EL GRUPO ELIGE"],spicy:["RETO","DUELO","EL GRUPO ELIGE","TODOS"],pecado:["DUELO","TODOS","EL GRUPO ELIGE","PÉCADO"]}[currentIntensity];
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
   const pool=mechanics[mode]?.[currentIntensity]||["RESPONDE"];
   return pool[Math.floor(Math.random()*pool.length)];
 }
@@ -861,8 +943,14 @@ function showQuestion(){
     mode==="couple" ? "TURNO DE "+players[currentPlayer] :
     "TURNO DE "+players[currentPlayer];
   $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
-  $("mechanicLabel").textContent=getMechanic();
+  const mechanic = getMechanic();
+  $("mechanicLabel").textContent=mechanic;
   $("questionText").textContent=list[randomIndex];
+  const dareBtn = $("completeDareBtn");
+  dareBtn.classList.toggle("hidden", currentCategory!=="dare");
+  if(currentCategory==="dare") {
+    dareBtn.textContent = mechanic==="TODOS" ? "🔥 TODOS LO HACEN" : mechanic==="DUELO" ? "⚔️ ACEPTAR RETO" : "🔥 CUMPLIDO";
+  }
   $("counter").textContent=`${used.length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
   saveGame();
 }
@@ -885,6 +973,11 @@ function skipQuestion(){
   showModal("😈 SALTASTE", `${players[currentPlayer]} saltó. Penalización: 1 trago.`);
 }
 
+function completeDare(){
+  dareCount++;
+  showModal("🔥 RETO CUMPLIDO", `${players[currentPlayer]} completó el reto. Ahora cambia el turno.`);
+}
+
 function closeModal(){
   $("modal").classList.remove("show");
   nextQuestion();
@@ -899,7 +992,7 @@ function showModal(title,text){
 
 function saveGame(){
   if(!sessionStarted || players.length<2)return;
-  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,usedQuestions,sessionStarted};
+  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted};
   localStorage.setItem("pecadoSave",JSON.stringify(data));
   updateContinueButton();
 }
@@ -913,7 +1006,7 @@ function updateContinueButton(){
 function continueGame(){
   const d=loadSaved();
   if(!d)return;
-  ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,usedQuestions,sessionStarted}=d);
+  ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted}=d);
   if(!players?.length)return;
   if(!currentCategory || !currentIntensity) showScreen("categoryScreen");
   else {showScreen("gameScreen");showQuestion()}
@@ -927,7 +1020,7 @@ function clearSavedGame(){
 function newGame(){
   const d=loadSaved();
   if(d){mode=d.mode;players=d.players}
-  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;usedQuestions=freshUsed();
+  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;dareCount=0;usedQuestions=freshUsed();
   sessionStarted=true;showScreen("categoryScreen");saveGame();
 }
 function showSettings(){showScreen("settingsScreen")}
@@ -935,6 +1028,7 @@ function showEnd(){
   $("statQuestions").textContent=questionNumber;
   $("statDrinks").textContent=drinkCount;
   $("statSkips").textContent=skipCount;
+  $("statDares").textContent=dareCount;
   localStorage.removeItem("pecadoSave");
   showScreen("endScreen");
 }
