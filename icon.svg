@@ -1,10 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-<defs>
- <radialGradient id="bg"><stop stop-color="#4b123f"/><stop offset="1" stop-color="#09060b"/></radialGradient>
- <linearGradient id="flame" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#ff287d"/><stop offset=".55" stop-color="#a21cff"/><stop offset="1" stop-color="#ff6ab0"/></linearGradient>
- <filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-</defs>
-<rect width="512" height="512" rx="112" fill="url(#bg)"/>
-<path filter="url(#glow)" fill="url(#flame)" d="M256 72c22 63-20 78 39 122 39 29 65 67 65 113 0 72-47 128-104 128s-104-56-104-128c0-55 31-94 73-126 34-26 47-55 31-109 45 31 69 61 68 101 24-29 31-58 32-101z"/>
-<text x="256" y="476" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="900" letter-spacing="7">PÉCADO</text>
+<rect width="512" height="512" rx="112" fill="#100711"/>
+<circle cx="256" cy="220" r="175" fill="#28102d"/>
+<path d="M256 82c36 58 91 91 91 159 0 64-42 113-91 113s-91-49-91-113c0-47 25-82 67-119-2 34 11 51 24 62 10-30 20-57 0-102z" fill="#ff287d"/>
+<path d="M256 142c18 32 43 53 43 91 0 31-19 56-43 56s-43-25-43-56c0-23 11-42 29-59-1 20 7 30 14 35 7-20 8-39 0-67z" fill="#9d1cff"/>
+<text x="256" y="410" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-weight="900" font-size="58" letter-spacing="5">PÉCADO</text>
 </svg>

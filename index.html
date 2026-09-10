@@ -3,363 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#19091d">
+<meta name="theme-color" content="#100711">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="PÉCADO">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>PÉCADO 🔥</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+:root{
+  --bg:#080509;--panel:rgba(23,9,25,.90);--line:rgba(255,105,180,.20);
+  --muted:#b995ad;--pink:#ff287d;--purple:#9d1cff;
 }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background:
-        radial-gradient(circle at top, #4b123f 0%, #19091d 45%, #09060b 100%);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+html,body{margin:0;min-height:100%;background:var(--bg)}
+body{
+  min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#fff;display:flex;justify-content:center;align-items:center;padding:18px;
+  background:
+    radial-gradient(circle at 50% -10%,#5b174d 0%,#260d29 30%,#100711 65%,#080509 100%);
 }
-
-.container {
-    width: 100%;
-    max-width: 650px;
+button,input{font:inherit}
+.container{width:100%;max-width:680px}
+.brand{text-align:center;margin:4px 0 22px}
+.logo{
+  font-size:58px;font-weight:950;letter-spacing:7px;line-height:1;
+  text-shadow:0 0 12px rgba(255,40,125,.65),0 0 38px rgba(157,28,255,.42)
 }
-
-.logo {
-    text-align: center;
-    font-size: 52px;
-    font-weight: 900;
-    letter-spacing: 6px;
-    margin-bottom: 4px;
-    text-shadow: 0 0 25px rgba(255, 50, 120, .7);
+.tagline{margin-top:9px;color:#d8a8c6;font-size:14px;letter-spacing:1px}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:28px;
+  padding:28px;box-shadow:0 25px 80px rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);overflow:hidden
 }
-
-.subtitle {
-    text-align: center;
-    color: #d9a9c5;
-    margin-bottom: 25px;
+.screen{display:none}.screen.active{display:block}
+h2{text-align:center;margin:0 0 22px;font-size:23px}
+.small{text-align:center;color:var(--muted);font-size:13px;line-height:1.5;margin:-10px 0 20px}
+button{
+  width:100%;border:0;border-radius:17px;padding:17px 16px;margin-top:11px;
+  color:#fff;font-weight:900;letter-spacing:.4px;cursor:pointer;
+  transition:transform .16s,filter .16s,box-shadow .16s
 }
-
-.card {
-    background: rgba(25, 10, 28, .88);
-    border: 1px solid rgba(255, 100, 170, .22);
-    border-radius: 25px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.45);
-    backdrop-filter: blur(12px);
+button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+button:active{transform:translateY(0)}
+.primary{background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 10px 28px rgba(255,40,125,.18)}
+.secondary{background:#29162c;border:1px solid #5c3158}
+.mode{
+  padding:23px;text-align:left;display:flex;align-items:center;gap:15px;
+  background:linear-gradient(135deg,#30122e,#17101a);border:1px solid #5b2a55
 }
-
-.screen {
-    display: none;
+.mode .emoji{font-size:34px}.mode b{display:block;font-size:20px}.mode span{display:block;color:#c19db6;font-size:12px;margin-top:4px}
+.category{padding:23px 16px;font-size:20px}
+.pasado{background:linear-gradient(135deg,#6d2cff,#d026ff)}
+.deseo{background:linear-gradient(135deg,#ff236d,#ff7b22)}
+.trago{background:linear-gradient(135deg,#8e1515,#e52d27)}
+.intensity{padding:21px 15px}
+.warm{background:linear-gradient(135deg,#d97912,#ffbd39)}
+.spicy{background:linear-gradient(135deg,#ff326d,#ff176b)}
+.pecado{background:linear-gradient(135deg,#a600ff,#ff006a)}
+input{
+  width:100%;padding:16px;margin-bottom:11px;border-radius:14px;border:1px solid #653052;
+  background:#130a16;color:#fff;outline:none
 }
-
-.screen.active {
-    display: block;
+input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.player-row{display:flex;gap:9px;margin-bottom:9px}.player-row input{margin:0}
+.remove{width:50px;margin:0;padding:0;background:#321a31;border:1px solid #5a3054}
+.add{background:#1b101d;border:1px dashed #68405f;color:#d5b0c9}
+.error{color:#ff789d;text-align:center;min-height:20px;margin-bottom:6px;font-size:13px}
+.question-card{text-align:center}
+.player{
+  font-size:14px;text-transform:uppercase;letter-spacing:2px;color:#ff76b5;font-weight:900
 }
-
-h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 25px;
+.badge{
+  display:inline-block;margin-top:7px;padding:6px 10px;border-radius:999px;
+  background:#211024;color:#d8b5ce;font-size:11px
 }
-
-input {
-    width: 100%;
-    padding: 16px;
-    margin-bottom: 12px;
-    border-radius: 14px;
-    border: 1px solid #653052;
-    background: #160b18;
-    color: white;
-    font-size: 16px;
-    outline: none;
+.mechanic{
+  margin:18px 0 4px;font-size:12px;letter-spacing:2px;color:#c9a7c0;font-weight:900
 }
-
-button {
-    width: 100%;
-    border: none;
-    border-radius: 15px;
-    padding: 16px;
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: 800;
-    cursor: pointer;
-    color: white;
-    transition: .2s;
+.question{font-size:28px;line-height:1.34;font-weight:800;margin:18px 3px 25px}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.drink{background:linear-gradient(135deg,#6d1111,#d93636)}
+.skip{background:#342038}.next{background:linear-gradient(135deg,#ff287d,#a21cff)}
+.back{background:transparent;border:1px solid #56304f;color:#c9a9c1;font-size:12px}
+.counter{text-align:center;color:#8f7189;font-size:12px;margin-top:14px}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0
 }
-
-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.12);
-}
-
-.primary {
-    background: linear-gradient(135deg, #ff287d, #9d1cff);
-}
-
-.category {
-    padding: 24px 15px;
-    font-size: 21px;
-}
-
-.pasado {
-    background: linear-gradient(135deg, #6d2cff, #d026ff);
-}
-
-.deseo {
-    background: linear-gradient(135deg, #ff236d, #ff7b22);
-}
-
-.trago {
-    background: linear-gradient(135deg, #8e1515, #e52d27);
-}
-
-.intensity {
-    padding: 22px 15px;
-}
-
-.warm {
-    background: linear-gradient(135deg, #e88b19, #ffbd39);
-}
-
-.spicy {
-    background: linear-gradient(135deg, #ff326d, #ff176b);
-}
-
-.pecado {
-    background: linear-gradient(135deg, #a600ff, #ff006a);
-}
-
-.question-card {
-    text-align: center;
-    padding: 20px 5px;
-}
-
-.player {
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #ff76b5;
-    font-weight: 800;
-}
-
-.category-label {
-    color: #cba7c9;
-    font-size: 13px;
-    margin-top: 7px;
-}
-
-.question {
-    font-size: 27px;
-    line-height: 1.35;
-    font-weight: 750;
-    margin: 30px 5px;
-}
-
-.drink {
-    background: linear-gradient(135deg, #6d1111, #d93636);
-}
-
-.skip {
-    background: #342038;
-}
-
-.next {
-    background: linear-gradient(135deg, #ff287d, #a21cff);
-}
-
-.back {
-    background: transparent;
-    border: 1px solid #56304f;
-    color: #c9a9c1;
-    font-size: 13px;
-    margin-top: 18px;
-}
-
-.counter {
-    text-align: center;
-    color: #8f7189;
-    font-size: 12px;
-    margin-top: 15px;
-}
-
-.error {
-    color: #ff789d;
-    text-align: center;
-    margin-bottom: 10px;
-    min-height: 20px;
-}
-
-@media (max-width: 500px) {
-    .logo {
-        font-size: 40px;
-    }
-
-    .card {
-        padding: 22px 18px;
-    }
-
-    .question {
-        font-size: 23px;
-    }
-}
-
+.stat{background:#150b17;border:1px solid #352039;border-radius:15px;padding:12px;text-align:center}
+.stat b{display:block;font-size:20px}.stat span{font-size:10px;color:#a9849e}
 .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:rgba(5,2,8,.78);
-    backdrop-filter:blur(10px);
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+  position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;
+  justify-content:center;padding:20px;z-index:20;backdrop-filter:blur(8px)
 }
-.modal.show{display:flex;}
-.modal-box{
-    width:100%;
-    max-width:430px;
-    text-align:center;
-    background:linear-gradient(160deg,#2a102d,#100811);
-    border:1px solid rgba(255,80,150,.35);
-    border-radius:28px;
-    padding:32px 24px 24px;
-    box-shadow:0 25px 90px rgba(0,0,0,.65);
-    animation:pop .22s ease-out;
+.modal.show{display:flex}.modal-box{
+  width:min(520px,100%);background:#190c1b;border:1px solid #633258;border-radius:25px;
+  padding:25px;box-shadow:0 25px 80px #000;text-align:center
 }
-.modal-icon{font-size:52px;margin-bottom:5px;}
-.modal-box h2{margin-bottom:12px;color:#ff76b5;}
-.modal-text{font-size:19px;line-height:1.45;color:#f4ddea;margin:12px 0 22px;}
-@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-
+.modal-box h3{margin:0 0 10px;font-size:23px}.modal-box p{color:#d0adc3;line-height:1.5}
+.toast{
+  position:fixed;left:50%;bottom:25px;transform:translateX(-50%) translateY(20px);
+  opacity:0;pointer-events:none;background:#251228;border:1px solid #6b3a61;
+  padding:12px 17px;border-radius:999px;font-size:13px;transition:.25s;z-index:30
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hidden{display:none!important}
+@media(max-width:500px){
+  body{padding:12px}.card{padding:21px 17px}.logo{font-size:43px;letter-spacing:5px}
+  .question{font-size:23px}.grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}
+}
 </style>
 </head>
-
 <body>
-
 <div class="container">
+  <div class="brand">
+    <div class="logo">PÉCADO</div>
+    <div class="tagline">Verdad • Deseo • Trago 🔥</div>
+  </div>
 
-<div class="logo">PÉCADO</div>
-<div class="subtitle">Verdad • Deseo • Trago 🔥</div>
+  <div class="card">
 
-<div class="card">
+    <!-- HOME -->
+    <section id="homeScreen" class="screen active">
+      <h2>¿Qué van a jugar?</h2>
+      <p class="small">Una experiencia de verdad, deseo y trago que se adapta a ustedes.</p>
+      <button class="primary" onclick="chooseMode('couple')">❤️ PAREJA</button>
+      <button class="mode" onclick="chooseMode('group')">
+        <div class="emoji">🥂</div>
+        <div><b>GRUPO</b><span>3–10 jugadores • todos participan</span></div>
+      </button>
+      <button id="continueBtn" class="secondary hidden" onclick="continueGame()">🔥 CONTINUAR</button>
+      <button class="back" onclick="showSettings()">⚙️ AJUSTES</button>
+    </section>
 
-<!-- START -->
-<div id="startScreen" class="screen active">
-    <h2>¿Quiénes están jugando?</h2>
+    <!-- SETUP -->
+    <section id="setupScreen" class="screen">
+      <h2 id="setupTitle">❤️ PAREJA</h2>
+      <p id="setupHint" class="small">Escriban sus nombres para comenzar.</p>
+      <div id="playersList"></div>
+      <button id="addPlayerBtn" class="add hidden" onclick="addPlayer()">＋ AGREGAR JUGADOR</button>
+      <div class="error" id="nameError"></div>
+      <button class="primary" onclick="finishSetup()">CONTINUAR 🔥</button>
+      <button class="back" onclick="goHome()">← VOLVER</button>
+    </section>
 
-    <div class="error" id="nameError"></div>
+    <!-- CATEGORY -->
+    <section id="categoryScreen" class="screen">
+      <h2>ELIGE TU PECADO</h2>
+      <button class="category pasado" onclick="chooseCategory('past')">🔥 PASADO<small>Secretos • Experiencias • Primeras veces</small></button>
+      <button class="category deseo" onclick="chooseCategory('desire')">😈 DESEO<small>Fantasías • Atracción • Curiosidad</small></button>
+      <button class="category trago" onclick="chooseCategory('drink')">🍷 TRAGO<small>Retos • Confesiones • Castigos</small></button>
+      <button class="back" onclick="goHome()">← VOLVER</button>
+    </section>
 
-    <input id="player1" placeholder="Jugador 1">
-    <input id="player2" placeholder="Jugador 2">
+    <!-- INTENSITY -->
+    <section id="intensityScreen" class="screen">
+      <h2>¿QUÉ TAN LEJOS?</h2>
+      <p class="small">La intensidad cambia no solo las preguntas, sino también cómo se juega.</p>
+      <button class="intensity warm" onclick="chooseIntensity('warm')">🌶️ CALIENTE</button>
+      <button class="intensity spicy" onclick="chooseIntensity('spicy')">🌶️🌶️ MUY PICANTE</button>
+      <button class="intensity pecado" onclick="chooseIntensity('pecado')">🌶️🌶️🌶️ PÉCADO</button>
+      <button class="back" onclick="showCategoryScreen()">← CAMBIAR CATEGORÍA</button>
+    </section>
 
-    <button class="primary" onclick="startGame()">COMENZAR 🔥</button>
-</div>
-
-
-<!-- CATEGORY -->
-<div id="categoryScreen" class="screen">
-    <h2>ELIGE TU PECADO</h2>
-
-    <button class="category pasado" onclick="chooseCategory('past')">
-        🔥 PASADO
-        <small>Secretos • Experiencias • Primeras veces</small>
-    </button>
-
-    <button class="category deseo" onclick="chooseCategory('desire')">
-        😈 DESEO
-        <small>Fantasías • Atracción • Curiosidad</small>
-    </button>
-
-    <button class="category trago" onclick="chooseCategory('drink')">
-        🍷 TRAGO
-        <small>Retos • Confesiones • Castigos</small>
-    </button>
-</div>
-
-
-<!-- INTENSITY -->
-<div id="intensityScreen" class="screen">
-    <h2>¿QUÉ TAN LEJOS QUIERES LLEGAR?</h2>
-
-    <button class="intensity warm" onclick="chooseIntensity('warm')">
-        🌶️ CALIENTE
-    </button>
-
-    <button class="intensity spicy" onclick="chooseIntensity('spicy')">
-        🌶️🌶️ MUY PICANTE
-    </button>
-
-    <button class="intensity pecado" onclick="chooseIntensity('pecado')">
-        🌶️🌶️🌶️ PÉCADO
-    </button>
-
-    <button class="back" onclick="showCategoryScreen()">
-        ← VOLVER
-    </button>
-</div>
-
-
-<!-- GAME -->
-<div id="gameScreen" class="screen">
-
-    <div class="question-card">
-
+    <!-- GAME -->
+    <section id="gameScreen" class="screen">
+      <div class="question-card">
         <div class="player" id="playerName"></div>
-
-        <div class="category-label" id="categoryName"></div>
-
+        <div class="badge" id="categoryName"></div>
+        <div class="mechanic" id="mechanicLabel">RESPONDE</div>
         <div class="question" id="questionText"></div>
-
-        <button class="drink" onclick="takeDrink()">
-            🍷 BEBER
-        </button>
-
-        <button class="skip" onclick="skipQuestion()">
-            SALTAR
-        </button>
-
-        <button class="next" onclick="nextQuestion()">
-            SIGUIENTE 🔥
-        </button>
-
+        <div class="action-row">
+          <button class="drink" onclick="takeDrink()">🍷 BEBER</button>
+          <button class="skip" onclick="skipQuestion()">SALTAR</button>
+        </div>
+        <button class="next" onclick="nextQuestion()">SIGUIENTE 🔥</button>
         <div class="counter" id="counter"></div>
+        <button class="back" onclick="showIntensity()">← CAMBIAR INTENSIDAD</button>
+      </div>
+    </section>
 
-        <button class="back" onclick="backToIntensity()">
-            ← CAMBIAR INTENSIDAD
-        </button>
+    <!-- SETTINGS -->
+    <section id="settingsScreen" class="screen">
+      <h2>⚙️ AJUSTES</h2>
+      <p class="small">Estas opciones quedarán guardadas en este dispositivo.</p>
+      <button class="secondary" onclick="clearSavedGame()">🗑️ BORRAR PARTIDA GUARDADA</button>
+      <button class="back" onclick="goHome()">← VOLVER</button>
+    </section>
 
-    </div>
+    <!-- END -->
+    <section id="endScreen" class="screen">
+      <h2>🔥 FIN DEL PECADO</h2>
+      <p class="small">Así quedó la sesión.</p>
+      <div class="stats">
+        <div class="stat"><b id="statQuestions">0</b><span>PREGUNTAS</span></div>
+        <div class="stat"><b id="statDrinks">0</b><span>TRAGOS</span></div>
+        <div class="stat"><b id="statSkips">0</b><span>SALTOS</span></div>
+      </div>
+      <button class="primary" onclick="newGame()">🔥 JUGAR OTRA VEZ</button>
+      <button class="back" onclick="goHome()">← INICIO</button>
+    </section>
+
+  </div>
 </div>
 
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle">🍷 PÉCADO</h3>
+    <p id="modalText"></p>
+    <button class="primary" onclick="closeModal()">CONTINUAR 🔥</button>
+  </div>
 </div>
-</div>
-
+<div id="toast" class="toast"></div>
 
 <script>
-
-/* =========================================================
-   BANCO DE 450 PREGUNTAS
-   50 x PASADO CALIENTE
-   50 x PASADO MUY PICANTE
-   50 x PASADO PÉCADO
-   50 x DESEO CALIENTE
-   50 x DESEO MUY PICANTE
-   50 x DESEO PÉCADO
-   50 x TRAGO CALIENTE
-   50 x TRAGO MUY PICANTE
-   50 x TRAGO PÉCADO
-========================================================= */
-
 const questions = {
 
 past: {
@@ -865,298 +723,228 @@ pecado: [
 
 };
 
-
 /* =========================================================
-   ESTADO DEL JUEGO
+   NUEVO MOTOR PÉCADO — HOME / PAREJA / GRUPO / GUARDADO
 ========================================================= */
-
 let players = [];
+let mode = "";
 let currentPlayer = 0;
 let currentCategory = "";
 let currentIntensity = "";
 let questionNumber = 0;
+let drinkCount = 0;
+let skipCount = 0;
+let sessionStarted = false;
 
 let usedQuestions = {
-    past: {
-        warm: [],
-        spicy: [],
-        pecado: []
-    },
-    desire: {
-        warm: [],
-        spicy: [],
-        pecado: []
-    },
-    drink: {
-        warm: [],
-        spicy: [],
-        pecado: []
-    }
+  past:{warm:[],spicy:[],pecado:[]},
+  desire:{warm:[],spicy:[],pecado:[]},
+  drink:{warm:[],spicy:[],pecado:[]}
 };
 
+const mechanics = {
+  couple: {
+    warm:["RESPONDE","PAREJA ELIGE"],
+    spicy:["RESPONDE","AMBOS","PAREJA ELIGE"],
+    pecado:["AMBOS","PAREJA ELIGE","DUELO","PÉCADO"]
+  },
+  group: {
+    warm:["RESPONDE","EL GRUPO ELIGE"],
+    spicy:["RESPONDE","DUELO","EL GRUPO ELIGE","TODOS"],
+    pecado:["DUELO","TODOS","EL GRUPO ELIGE","PÉCADO"]
+  }
+};
 
-/* =========================================================
-   FUNCIONES GENERALES
-========================================================= */
+function $(id){return document.getElementById(id)}
 
-function showScreen(id) {
-
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
-
-    document.getElementById(id).classList.add("active");
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  $(id).classList.add("active");
+  window.scrollTo(0,0);
 }
 
+function goHome(){
+  saveGame();
+  showScreen("homeScreen");
+  updateContinueButton();
+}
 
-function startGame() {
+function chooseMode(selected){
+  mode = selected;
+  players = [];
+  renderPlayerInputs();
+  showScreen("setupScreen");
+}
 
-    const p1 = document.getElementById("player1").value.trim();
-    const p2 = document.getElementById("player2").value.trim();
-
-    if (!p1 || !p2) {
-        document.getElementById("nameError").textContent =
-            "Escribe los nombres de los dos jugadores.";
-        return;
+function renderPlayerInputs(){
+  const list = $("playersList");
+  list.innerHTML = "";
+  const count = mode === "group" ? Math.max(players.length,3) : 2;
+  if(mode === "group" && players.length === 0) players = ["","",""];
+  if(mode === "couple" && players.length === 0) players = ["",""];
+  for(let i=0;i<players.length;i++){
+    const row=document.createElement("div");
+    row.className="player-row";
+    row.innerHTML=`<input id="p${i}" placeholder="${mode==="couple" ? "Jugador "+(i+1) : "Jugador "+(i+1)}" value="${escapeHtml(players[i]||"")}">`;
+    if(mode==="group" && players.length>3){
+      row.innerHTML += `<button class="remove" onclick="removePlayer(${i})">×</button>`;
     }
-
-    players = [p1, p2];
-
-    currentPlayer = 0;
-    questionNumber = 0;
-
-    saveGame();
-    showCategoryScreen();
+    list.appendChild(row);
+  }
+  $("setupTitle").textContent = mode==="couple" ? "❤️ PAREJA" : "🥂 GRUPO";
+  $("setupHint").textContent = mode==="couple"
+    ? "Escriban los nombres de los dos jugadores."
+    : "Agreguen de 3 a 10 jugadores.";
+  $("addPlayerBtn").classList.toggle("hidden", mode!=="group" || players.length>=10);
 }
 
-
-function showCategoryScreen() {
-    showScreen("categoryScreen");
+function addPlayer(){
+  if(players.length<10){ players.push(""); renderPlayerInputs(); }
+}
+function removePlayer(i){
+  players.splice(i,1);
+  renderPlayerInputs();
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
 
-
-function chooseCategory(category) {
-
-    currentCategory = category;
-
-    showScreen("intensityScreen");
+function finishSetup(){
+  const vals = players.map((_,i)=>$("p"+i)?.value.trim()||"");
+  if(vals.some(v=>!v) || new Set(vals.map(v=>v.toLowerCase())).size!==vals.length){
+    $("nameError").textContent="Escribe nombres únicos para todos los jugadores.";
+    return;
+  }
+  players=vals;
+  currentPlayer=0; questionNumber=0; drinkCount=0; skipCount=0; sessionStarted=true;
+  usedQuestions = freshUsed();
+  saveGame();
+  showScreen("categoryScreen");
 }
 
-
-function chooseIntensity(intensity) {
-
-    currentIntensity = intensity;
-
-    showScreen("gameScreen");
-
-    saveGame();
-    showQuestion();
+function freshUsed(){
+  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]}};
 }
 
-
-function getQuestions() {
-
-    return questions[currentCategory][currentIntensity];
+function showCategoryScreen(){showScreen("categoryScreen")}
+function chooseCategory(category){currentCategory=category;saveGame();showScreen("intensityScreen")}
+function showIntensity(){showScreen("intensityScreen")}
+function chooseIntensity(intensity){
+  currentIntensity=intensity;
+  showScreen("gameScreen");
+  showQuestion();
+  saveGame();
 }
 
-
-function getCategoryName() {
-
-    const names = {
-        past: "🔥 PASADO",
-        desire: "😈 DESEO",
-        drink: "🍷 TRAGO"
-    };
-
-    return names[currentCategory];
+function getQuestions(){return questions[currentCategory][currentIntensity]}
+function getCategoryName(){
+  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO"}[currentCategory];
+}
+function getIntensityName(){
+  return {warm:"🌶️ CALIENTE",spicy:"🌶️🌶️ MUY PICANTE",pecado:"🌶️🌶️🌶️ PÉCADO"}[currentIntensity];
 }
 
-
-function getIntensityName() {
-
-    const names = {
-        warm: "🌶️ CALIENTE",
-        spicy: "🌶️🌶️ MUY PICANTE",
-        pecado: "🌶️🌶️🌶️ PÉCADO"
-    };
-
-    return names[currentIntensity];
+function getMechanic(){
+  const pool=mechanics[mode]?.[currentIntensity]||["RESPONDE"];
+  return pool[Math.floor(Math.random()*pool.length)];
 }
 
+function showQuestion(){
+  const list=getQuestions();
+  let used=usedQuestions[currentCategory][currentIntensity];
+  if(used.length>=list.length){usedQuestions[currentCategory][currentIntensity]=[];used=[]}
+  let randomIndex;
+  do{randomIndex=Math.floor(Math.random()*list.length)}while(used.includes(randomIndex));
+  used.push(randomIndex);
 
-/* =========================================================
-   MOSTRAR PREGUNTA
-========================================================= */
-
-function showQuestion() {
-
-    const list = getQuestions();
-
-    let used = usedQuestions[currentCategory][currentIntensity];
-
-    /*
-       Si ya se usaron todas las preguntas de esta combinación,
-       se reinicia solamente esa combinación.
-    */
-
-    if (used.length >= list.length) {
-        usedQuestions[currentCategory][currentIntensity] = [];
-        used = [];
-    }
-
-    let randomIndex;
-
-    do {
-        randomIndex = Math.floor(Math.random() * list.length);
-    } while (used.includes(randomIndex));
-
-    used.push(randomIndex);
-    saveGame();
-
-    const question = list[randomIndex];
-
-    document.getElementById("playerName").textContent =
-        "TURNO DE " + players[currentPlayer];
-
-    document.getElementById("categoryName").textContent =
-        getCategoryName() + " • " + getIntensityName();
-
-    document.getElementById("questionText").textContent =
-        question;
-
-    document.getElementById("counter").textContent =
-        `${used.length} / ${list.length} preguntas usadas`;
+  $("playerName").textContent =
+    mode==="couple" ? "TURNO DE "+players[currentPlayer] :
+    "TURNO DE "+players[currentPlayer];
+  $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
+  $("mechanicLabel").textContent=getMechanic();
+  $("questionText").textContent=list[randomIndex];
+  $("counter").textContent=`${used.length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
+  saveGame();
 }
 
-
-/* =========================================================
-   SIGUIENTE PREGUNTA
-========================================================= */
-
-function nextQuestion() {
-
-    currentPlayer = currentPlayer === 0 ? 1 : 0;
-
-    questionNumber++;
-
-    saveGame();
-    showQuestion();
+function nextQuestion(){
+  currentPlayer=(currentPlayer+1)%players.length;
+  questionNumber++;
+  showQuestion();
 }
 
-
-/* =========================================================
-   BEBER
-========================================================= */
-
-function takeDrink() {
-    const penalties = [
-        "Toma 1 trago 🍷",
-        "Toma 2 tragos 🍷🍷",
-        "Toma 3 tragos 🍷🍷🍷",
-        "Toma un trago largo 🍷",
-        "Tu pareja elige cuánto tomas 😈"
-    ];
-    const penalty = penalties[Math.floor(Math.random() * penalties.length)];
-    document.getElementById("drinkTitle").textContent = "¡A BEBER, " + players[currentPlayer].toUpperCase() + "!";
-    document.getElementById("drinkText").textContent = penalty;
-    document.getElementById("drinkModal").classList.add("show");
-    localStorage.setItem("pecado_last_action", JSON.stringify({player:players[currentPlayer], action:"drink", time:Date.now()}));
+function takeDrink(){
+  const amount = currentIntensity==="pecado" ? 2 : currentIntensity==="spicy" ? 2 : 1;
+  drinkCount += amount;
+  showModal("🍷 A BEBER", `${players[currentPlayer]} toma ${amount} ${amount===1?"trago":"tragos"}.`);
 }
 
-
-/* =========================================================
-   SALTAR
-========================================================= */
-
-function skipQuestion() {
-    document.getElementById("drinkTitle").textContent = "PREGUNTA SALTADA 😈";
-    document.getElementById("drinkText").textContent =
-        players[currentPlayer] + " saltó. Penalización: 2 tragos 🍷🍷";
-    document.getElementById("drinkModal").classList.add("show");
-    localStorage.setItem("pecado_last_action", JSON.stringify({player:players[currentPlayer], action:"skip", time:Date.now()}));
+function skipQuestion(){
+  skipCount++;
+  drinkCount++;
+  showModal("😈 SALTASTE", `${players[currentPlayer]} saltó. Penalización: 1 trago.`);
 }
 
-function closeDrink() {
-    document.getElementById("drinkModal").classList.remove("show");
-    nextQuestion();
+function closeModal(){
+  $("modal").classList.remove("show");
+  nextQuestion();
 }
 
-
-/* =========================================================
-   VOLVER A ELEGIR
-========================================================= */
-
-function backToCategories() {
-
-    showCategoryScreen();
+function showModal(title,text){
+  $("modalTitle").textContent=title;
+  $("modalText").textContent=text;
+  $("modal").classList.add("show");
+  saveGame();
 }
 
-
-function backToIntensity() {
-
-    showScreen("intensityScreen");
+function saveGame(){
+  if(!sessionStarted || players.length<2)return;
+  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,usedQuestions,sessionStarted};
+  localStorage.setItem("pecadoSave",JSON.stringify(data));
+  updateContinueButton();
 }
 
-
-/* =========================================================
-   PWA + GUARDADO LOCAL
-========================================================= */
-let deferredInstallPrompt = null;
-
-window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    document.getElementById("installBar").style.display = "block";
-});
-
-async function installApp() {
-    if (!deferredInstallPrompt) return;
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    document.getElementById("installBar").style.display = "none";
+function loadSaved(){
+  try{return JSON.parse(localStorage.getItem("pecadoSave")||"null")}catch(e){return null}
+}
+function updateContinueButton(){
+  $("continueBtn").classList.toggle("hidden",!loadSaved());
+}
+function continueGame(){
+  const d=loadSaved();
+  if(!d)return;
+  ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,usedQuestions,sessionStarted}=d);
+  if(!players?.length)return;
+  if(!currentCategory || !currentIntensity) showScreen("categoryScreen");
+  else {showScreen("gameScreen");showQuestion()}
+}
+function clearSavedGame(){
+  localStorage.removeItem("pecadoSave");
+  sessionStarted=false;
+  updateContinueButton();
+  showToast("Partida guardada eliminada.");
+}
+function newGame(){
+  const d=loadSaved();
+  if(d){mode=d.mode;players=d.players}
+  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;usedQuestions=freshUsed();
+  sessionStarted=true;showScreen("categoryScreen");saveGame();
+}
+function showSettings(){showScreen("settingsScreen")}
+function showEnd(){
+  $("statQuestions").textContent=questionNumber;
+  $("statDrinks").textContent=drinkCount;
+  $("statSkips").textContent=skipCount;
+  localStorage.removeItem("pecadoSave");
+  showScreen("endScreen");
+}
+function showToast(text){
+  const t=$("toast");t.textContent=text;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2200);
 }
 
-function saveGame() {
-    localStorage.setItem("pecado_state", JSON.stringify({
-        players, currentPlayer, currentCategory, currentIntensity,
-        questionNumber, usedQuestions
-    }));
-}
-
-function loadSavedNames() {
-    try {
-        const saved = JSON.parse(localStorage.getItem("pecado_state"));
-        if (saved && saved.players && saved.players.length === 2) {
-            document.getElementById("player1").value = saved.players[0] || "";
-            document.getElementById("player2").value = saved.players[1] || "";
-        }
-    } catch(e) {}
-}
-
-window.addEventListener("load", () => {
-    loadSavedNames();
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("service-worker.js").catch(() => {});
-    }
-});
-
+updateContinueButton();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}
 </script>
-
-
-<!-- PÉCADO app controls -->
-<div id="installBar" style="display:none; position:fixed; left:12px; right:12px; bottom:12px; z-index:50;">
-  <button class="primary" onclick="installApp()" style="box-shadow:0 10px 35px rgba(0,0,0,.45);">📲 INSTALAR PÉCADO</button>
-</div>
-
-<div id="drinkModal" class="modal">
-  <div class="modal-box">
-    <div class="modal-icon">🍷</div>
-    <h2 id="drinkTitle">¡A BEBER!</h2>
-    <div id="drinkText" class="modal-text"></div>
-    <button class="next" onclick="closeDrink()">CONTINUAR 🔥</button>
-  </div>
-</div>
-
 </body>
 </html>
