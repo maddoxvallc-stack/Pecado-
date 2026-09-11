@@ -175,11 +175,12 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
         <div class="player" id="playerName"></div>
         <div class="badge" id="categoryName"></div>
         <div class="mechanic" id="mechanicLabel">RESPONDE</div>
+        <div class="small" id="mechanicInstruction"></div>
         <div class="question" id="questionText"></div>
         <div class="action-row">
           <button class="drink" onclick="takeDrink()">🍷 BEBER</button>
           <button class="skip" onclick="skipQuestion()">SALTAR</button>
-          <button id="completeDareBtn" class="complete hidden" onclick="completeDare()">🔥 CUMPLIDO</button>
+          <button id="mechanicActionBtn" class="complete" onclick="resolveMechanic()">🔥 HACERLO</button>
         </div>
         <button class="next" onclick="nextQuestion()">SIGUIENTE 🔥</button>
         <div class="counter" id="counter"></div>
@@ -1039,6 +1040,70 @@ function showToast(text){
 
 updateContinueButton();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}
+</script>
+
+<script>
+/* PÉCADO v3 — active mechanic engine */
+const PECADO_MECHANICS = {
+  couple:{
+    warm:["RESPONDE","PAREJA ELIGE"],
+    spicy:["RESPONDE","AMBOS","PAREJA ELIGE"],
+    pecado:["AMBOS","PAREJA ELIGE","DUELO","PÉCADO"]
+  },
+  group:{
+    warm:["RESPONDE","EL GRUPO ELIGE"],
+    spicy:["RESPONDE","DUELO","EL GRUPO ELIGE","TODOS"],
+    pecado:["DUELO","TODOS","EL GRUPO ELIGE","PÉCADO"]
+  }
+};
+const PECADO_RULES={
+  "RESPONDE":["Responde con honestidad. Si no quieres responder, bebe.","💬 RESPONDER"],
+  "AMBOS":["Los dos responden al mismo tiempo. Si no coinciden, ambos beben.","❤️ AMBOS RESPONDEN"],
+  "PAREJA ELIGE":["Tu pareja decide si respondes o bebes.","😈 PAREJA ELIGE"],
+  "DUELO":["Elige otro jugador. Quien se niegue o falle, bebe.","⚔️ INICIAR DUELO"],
+  "TODOS":["Todos participan. Quien se niegue o falle, bebe.","🔥 TODOS PARTICIPAN"],
+  "EL GRUPO ELIGE":["El grupo decide quién participa.","🥂 GRUPO ELIGE"],
+  "PÉCADO":["Decide: responder, beber o aceptar el reto.","🔥 ACEPTAR PÉCADO"],
+  "RETO":["Haz el reto. Si prefieres no hacerlo, bebe.","🔥 CUMPLIDO"]
+};
+
+function pecadoPickMechanic(){
+  if(currentCategory==="dare"){
+    const p=mode==="couple"
+      ?{warm:["RETO","PAREJA ELIGE"],spicy:["RETO","PAREJA ELIGE","DUELO"],pecado:["RETO","PAREJA ELIGE","PÉCADO","DUELO"]}[currentIntensity]
+      :{warm:["RETO","EL GRUPO ELIGE"],spicy:["RETO","DUELO","EL GRUPO ELIGE","TODOS"],pecado:["DUELO","TODOS","EL GRUPO ELIGE","PÉCADO"]}[currentIntensity];
+    return p[Math.floor(Math.random()*p.length)];
+  }
+  const p=PECADO_MECHANICS[mode][currentIntensity];
+  return p[Math.floor(Math.random()*p.length)];
+}
+
+function pecadoApplyMechanic(){
+  currentMechanic=pecadoPickMechanic();
+  const rule=PECADO_RULES[currentMechanic]||PECADO_RULES.RESPONDE;
+  const label=document.getElementById("mechanicLabel");
+  const inst=document.getElementById("mechanicInstruction");
+  const btn=document.getElementById("mechanicActionBtn");
+  if(label)label.textContent=currentMechanic;
+  if(inst)inst.textContent=rule[0];
+  if(btn){btn.classList.remove("hidden");btn.textContent=rule[1];}
+}
+
+function resolveMechanic(){
+  const p=players[currentPlayer];
+  if(currentMechanic==="RETO"){completeDare();return;}
+  if(currentMechanic==="AMBOS"){showModal("❤️ AMBOS",`${p} y su pareja responden simultáneamente. Si no coinciden → ambos beben.`);return;}
+  if(currentMechanic==="PAREJA ELIGE"){showModal("😈 PAREJA ELIGE",`${players[(currentPlayer+1)%players.length]} decide si ${p} responde o bebe.`);return;}
+  if(currentMechanic==="DUELO"){
+    const others=players.filter((_,i)=>i!==currentPlayer);
+    const o=others[Math.floor(Math.random()*others.length)]||p;
+    showModal("⚔️ DUELO",`${p} se enfrenta a ${o}. Quien se niegue o falle, bebe.`);return;
+  }
+  if(currentMechanic==="TODOS"){showModal("🔥 TODOS","Todos participan. Quien se niegue o falle, bebe.");return;}
+  if(currentMechanic==="EL GRUPO ELIGE"){showModal("🥂 EL GRUPO ELIGE","El grupo decide quién participa en esta ronda.");return;}
+  if(currentMechanic==="PÉCADO"){showModal("🔥 PÉCADO",`${p} decide: responder, beber o aceptar el reto.`);return;}
+  showModal("💬 RESPONDE",`${p} responde la pregunta.`);
+}
 </script>
 </body>
 </html>
