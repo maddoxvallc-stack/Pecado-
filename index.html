@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="PÉCADO">
 <link rel="manifest" href="manifest.json">
-<title>PÉCADO 🔥 v4</title>
+<title>PÉCADO 🔥</title>
 
 <style>
 *{box-sizing:border-box}
@@ -54,6 +54,7 @@ button:active{transform:translateY(0)}
 }
 .mode .emoji{font-size:34px}.mode b{display:block;font-size:20px}.mode span{display:block;color:#c19db6;font-size:12px;margin-top:4px}
 .category{padding:23px 16px;font-size:20px}
+.dare{background:linear-gradient(135deg,#ff7b22,#d026ff)}
 .pasado{background:linear-gradient(135deg,#6d2cff,#d026ff)}
 .deseo{background:linear-gradient(135deg,#ff236d,#ff7b22)}
 .trago{background:linear-gradient(135deg,#8e1515,#e52d27)}
@@ -84,10 +85,6 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
 }
 .question{font-size:28px;line-height:1.34;font-weight:800;margin:18px 3px 25px}
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-/* RETO: make the section stand out and center the completion button */
-#categoryName.dare-active{background:linear-gradient(135deg,#ff287d,#ff7a18);color:#fff;border-color:#ff4d91;box-shadow:0 0 18px rgba(255,40,125,.28)}
-.action-row.dare-row #mechanicActionBtn{grid-column:1 / -1;justify-self:center;width:58%;background:linear-gradient(135deg,#ff287d,#ff7a18);color:#fff;border:1px solid #ff77ad;box-shadow:0 8px 24px rgba(255,40,125,.28)}
-@media(max-width:600px){.action-row.dare-row #mechanicActionBtn{width:72%}}
 .drink{background:linear-gradient(135deg,#6d1111,#d93636)}
 .complete{background:linear-gradient(135deg,#7d1cff,#ff287d)}
 .skip{background:#342038}.next{background:linear-gradient(135deg,#ff287d,#a21cff)}
@@ -118,64 +115,6 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
   body{padding:12px}.card{padding:21px 17px}.logo{font-size:43px;letter-spacing:5px}
   .question{font-size:23px}.grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}
 }
-</style>
-
-<style id="reto-button-contrast">
-/* RETO challenge button — high contrast */
-#mechanicActionBtn.complete,
-#mechanicActionBtn {
-  background: linear-gradient(135deg, #ff2d8d, #ff6a00) !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 2px solid #ffffff !important;
-  text-shadow: 0 1px 3px rgba(0,0,0,.75) !important;
-  font-weight: 900 !important;
-  box-shadow: 0 8px 24px rgba(255,45,141,.35) !important;
-}
-#mechanicActionBtn:hover,
-#mechanicActionBtn:active {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-}
-</style>
-
-
-<style id="reto-category-button">
-/* RETO category button under "ELIGE TU PECADO" */
-button[onclick*="chooseCategory('dare')"],
-button[onclick*='chooseCategory("dare")'] {
-  background: linear-gradient(135deg, #ff2d8d 0%, #ff6a00 100%) !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  border: 2px solid #ffb3d9 !important;
-  font-weight: 900 !important;
-  text-shadow: 0 2px 4px rgba(0,0,0,.8) !important;
-  box-shadow: 0 8px 26px rgba(255,45,141,.45) !important;
-}
-button[onclick*="chooseCategory('dare')"]:hover,
-button[onclick*='chooseCategory("dare")']:hover,
-button[onclick*="chooseCategory('dare')"]:active,
-button[onclick*='chooseCategory("dare")']:active {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  transform: translateY(-1px);
-}
-</style>
-
-
-<style id="reto-category-final">
-/* PÉCADO — RETO category button */
-.category.dare {
-  background: linear-gradient(135deg,#ff2d8d 0%,#ff6a00 100%) !important;
-  color:#fff !important;
-  -webkit-text-fill-color:#fff !important;
-  border:2px solid #ffb3d9 !important;
-  font-weight:900 !important;
-  text-shadow:0 2px 4px rgba(0,0,0,.8) !important;
-  box-shadow:0 8px 26px rgba(255,45,141,.45) !important;
-}
-.category.dare small { color:#fff !important; opacity:.95 !important; }
-.category.dare:hover { filter:brightness(1.12) !important; transform:translateY(-2px); }
 </style>
 </head>
 <body>
@@ -860,6 +799,132 @@ dare: {
 
 };
 
+/* ===== Preguntas nuevas (más atrevidas) ===== */
+const NUEVAS = {
+
+past: {
+
+spicy: [
+"¿Cuál fue el beso que casi termina en algo mucho más?",
+"¿Alguna vez te quedaste a dormir donde alguien sin planearlo... y durmieron poco?",
+"¿Con quién has tenido más química física en tu vida?",
+"¿Cuál fue la noche más intensa que recuerdas con alguien?",
+"¿Alguna vez te dieron un beso que te hizo olvidar dónde estabas?",
+"¿Cuál fue el lugar más arriesgado donde besaste a alguien?",
+"¿Alguna vez enviaste un mensaje subido de tono a la persona equivocada?",
+"¿Cuál es el mensaje más atrevido que has recibido?",
+"¿Alguna vez tuviste un 'amigo con derechos'? ¿Cómo terminó?",
+"¿Qué es lo más atrevido que has hecho dentro de un carro?",
+"¿Alguna vez te encontraron en una situación comprometedora?",
+"¿Qué detalle de alguien te prendió desde la primera impresión?",
+"¿Con quién tuviste una tensión que nunca se resolvió?",
+"¿Alguna vez coqueteaste con alguien justo frente a su pareja?",
+"¿Cuál fue la cita que terminó antes de lo esperado... por buenas razones?",
+"¿Alguna vez besaste a alguien la misma noche que lo conociste?",
+"¿Cuál fue el momento más torpe y gracioso cuando las cosas se ponían intensas?",
+"¿Alguna vez te despertaste junto a alguien y pensaste 'qué hice'?",
+"¿Qué ex todavía te provoca un escalofrío al recordarlo?",
+"¿Cuál fue tu mejor error delicioso?",
+"¿Tienes un encuentro que nunca le has contado a nadie?",
+"¿Cuál fue la mejor forma en que alguien te sedujo?",
+"¿Alguna vez fingiste estar dormido para evitar algo... o para provocarlo?",
+"¿Cuál fue la noche en que más te sentiste deseado?"
+],
+
+pecado: [
+"¿Cuál ha sido tu encuentro más apasionado y qué lo hizo tan especial?",
+"¿Qué es lo más atrevido que has hecho en un lugar donde podían descubrirte?",
+"¿Has tenido un encuentro de una sola noche? ¿Valió la pena?",
+"¿Cuál fue la vez que más rápido pasaste de la tensión a la acción?",
+"¿Cuál es tu récord de besos en una sola noche?",
+"¿Qué es lo más prohibido que has deseado de alguien y nunca dijiste?",
+"¿Qué pasó después de la foto o mensaje más atrevido que enviaste o recibiste?",
+"¿Cuál fue la sorpresa más caliente que te ha hecho una pareja?",
+"¿Qué hiciste una vez en una relación que hoy te sonroja... pero repetirías?",
+"¿Alguna vez estuviste con alguien con el nervio de que llegara otra persona?",
+"¿Cuál fue la propuesta más indecente que te han hecho? ¿La aceptaste?",
+"¿Tuviste un encuentro con alguien que no esperabas y fue mejor de lo imaginado?",
+"¿Qué aprendiste de una ex pareja en la intimidad que todavía usas?",
+"¿Cuál fue la noche que más te costó contarles a tus amigos?",
+"¿Cómo fue cuando cruzaste la línea entre amistad y algo más?",
+"¿Qué fantasía cumpliste que te sorprendió?",
+"¿En qué lugar inesperado has tenido un momento íntimo?",
+"¿Cuál fue tu momento más vergonzoso en plena intimidad?",
+"¿A quién de tu pasado le escribirías hoy si supieras que nadie se entera?",
+"¿Quién ha sido el mejor besador que has conocido?",
+"¿Alguna vez disfrutaste más la anticipación que el encuentro en sí?",
+"¿Qué fue lo que más te encendió de alguien en una primera cita?",
+"¿Qué frase o apodo en la intimidad nunca vas a olvidar?",
+"¿Qué experiencia de tu pasado repetirías mañana mismo?"
+]
+
+},
+
+desire: {
+
+spicy: [
+"¿En qué parte del cuerpo te encanta que te besen?",
+"¿Qué zona de tu cuerpo te gusta que te toquen suave y despacio?",
+"¿Prefieres tomar el control o que lo tome tu pareja?",
+"¿Qué te enciende más: las palabras al oído o las miradas?",
+"¿Qué prenda de tu pareja te vuelve loco?",
+"¿Lento y tortuoso, o intenso y espontáneo?",
+"¿Qué momento del día te parece más tentador para estar juntos?",
+"¿Qué tipo de beso te hace perder el control?",
+"¿Qué te gustaría que te susurraran al oído?",
+"¿Te excita más seducir o dejarte seducir?",
+"¿Qué rincón de la casa te gustaría estrenar?",
+"¿Qué tipo de ropa íntima te parece más sensual?",
+"¿Qué escena de película te ha puesto más tenso... en el buen sentido?",
+"¿Qué cosa pequeña hace tu pareja que te enciende al instante?",
+"¿Cómo te gustaría que te despertaran una mañana especial?",
+"¿Qué tan importantes son la música y la luz para ti?",
+"¿Cuál es tu zona más sensible?",
+"¿Qué tipo de masaje te gustaría recibir esta noche?",
+"¿Te gustaría que te vendaran los ojos, o vendar tú los de tu pareja?",
+"¿Qué te gustaría que te dijeran mirándote a los ojos?",
+"¿Te excita la idea de que casi los descubran?",
+"¿Bañera, ducha o cama?",
+"¿Qué haría que una cena se convirtiera en una noche inolvidable?",
+"¿Prefieres un mensaje atrevido durante el día o una sorpresa al llegar a casa?"
+],
+
+pecado: [
+"¿Cuál es la fantasía que más te excita y nunca has dicho en voz alta?",
+"¿Qué te gustaría que te hicieran y nunca te has atrevido a pedir?",
+"¿Qué parte del cuerpo de tu pareja te cuesta más dejar de mirar?",
+"¿Prefieres un ritmo lento y profundo o uno intenso y salvaje?",
+"¿Dónde te gustaría tener un encuentro con riesgo de que los descubran?",
+"¿Qué juguete o accesorio te da curiosidad probar?",
+"¿Te excita más dar órdenes o recibirlas?",
+"¿Qué es lo más atrevido que le pedirías a tu pareja esta noche?",
+"¿Qué fantasía de roles te gustaría representar?",
+"¿Te excitaría que tu pareja te dijera exactamente lo que va a hacerte antes de hacerlo?",
+"¿Qué haría tu pareja con sus manos para volverte loco?",
+"¿Cuál es el momento más intenso que te gustaría repetir con tu pareja?",
+"¿Qué cosa prohibida te gustaría vivir una noche sin consecuencias?",
+"¿Te gustaría que tu pareja te provocara durante todo el día hasta la noche?",
+"¿Qué frase subida de tono te enciende de inmediato?",
+"¿Hotel desconocido, playa de noche u oficina vacía: cuál te excita más?",
+"¿Qué rincón de tu pareja te gustaría explorar con calma?",
+"¿Qué te gustaría ver hacer a tu pareja solo para ti?",
+"¿Qué necesitarías para decirle 'sí' a una fantasía que hoy te da miedo?",
+"¿Mandar, obedecer o alternar?",
+"¿Qué te gustaría que durara toda la noche?",
+"¿Cómo sería tu noche perfecta, minuto a minuto?",
+"¿Qué límite te encantaría cruzar con confianza total?",
+"¿Qué te gustaría que pasara en cuanto termine este juego?"
+]
+
+}
+
+};
+
+questions.past.spicy.push(...NUEVAS.past.spicy);
+questions.past.pecado.push(...NUEVAS.past.pecado);
+questions.desire.spicy.push(...NUEVAS.desire.spicy);
+questions.desire.pecado.push(...NUEVAS.desire.pecado);
+
 /* =========================================================
    NUEVO MOTOR PÉCADO — HOME / PAREJA / GRUPO / GUARDADO
 ========================================================= */
@@ -872,7 +937,6 @@ let questionNumber = 0;
 let drinkCount = 0;
 let skipCount = 0;
 let dareCount = 0;
-let currentMechanic = "RESPONDE";
 let sessionStarted = false;
 
 let usedQuestions = {
@@ -1007,20 +1071,8 @@ function showQuestion(){
     mode==="couple" ? "TURNO DE "+players[currentPlayer] :
     "TURNO DE "+players[currentPlayer];
   $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
-  const mechanic = getMechanic();
-  currentMechanic = mechanic;
-  $("mechanicLabel").textContent=mechanic;
   $("questionText").textContent=list[randomIndex];
-  const dareBtn = $("mechanicActionBtn");
-  const actionRow = document.querySelector(".action-row");
-  const categoryBadge = $("categoryName");
-  dareBtn.classList.toggle("hidden", currentCategory!=="dare");
-  if(actionRow) actionRow.classList.toggle("dare-row", currentCategory==="dare");
-  if(categoryBadge) categoryBadge.classList.toggle("dare-active", currentCategory==="dare");
-  if(currentCategory==="dare") {
-    const rule = PECADO_RULES[mechanic] || PECADO_RULES.RETO;
-    dareBtn.textContent = rule[1];
-  }
+  pecadoApplyMechanic();
   $("counter").textContent=`${used.length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
   saveGame();
 }
@@ -1113,6 +1165,7 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.se
 
 <script>
 /* PÉCADO v3 — active mechanic engine */
+let currentMechanic="";
 const PECADO_MECHANICS = {
   couple:{
     warm:["RESPONDE","PAREJA ELIGE"],
