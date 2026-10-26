@@ -55,6 +55,7 @@ button:active{transform:translateY(0)}
 .mode .emoji{font-size:34px}.mode b{display:block;font-size:20px}.mode span{display:block;color:#c19db6;font-size:12px;margin-top:4px}
 .category{padding:23px 16px;font-size:20px}
 .dare{background:linear-gradient(135deg,#ff7b22,#d026ff)}
+.halloween{background:linear-gradient(135deg,#ff6a00,#5a0a8a 60%,#1a0524)}
 .pasado{background:linear-gradient(135deg,#6d2cff,#d026ff)}
 .deseo{background:linear-gradient(135deg,#ff236d,#ff7b22)}
 .trago{background:linear-gradient(135deg,#8e1515,#e52d27)}
@@ -153,6 +154,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
     <!-- CATEGORY -->
     <section id="categoryScreen" class="screen">
       <h2>ELIGE TU PECADO</h2>
+      <button class="category halloween" onclick="chooseCategory('halloween')">🎃 HALLOWEEN<small>Antes de la fiesta • Deseos • Límites • Club</small></button>
       <button class="category pasado" onclick="chooseCategory('past')">🔥 PASADO<small>Secretos • Experiencias • Primeras veces</small></button>
       <button class="category deseo" onclick="chooseCategory('desire')">😈 DESEO<small>Fantasías • Atracción • Curiosidad</small></button>
       <button class="category trago" onclick="chooseCategory('drink')">🍷 TRAGO<small>Retos • Confesiones • Castigos</small></button>
@@ -925,6 +927,144 @@ questions.past.pecado.push(...NUEVAS.past.pecado);
 questions.desire.spicy.push(...NUEVAS.desire.spicy);
 questions.desire.pecado.push(...NUEVAS.desire.pecado);
 
+/* ===== HALLOWEEN (club) ===== */
+questions.halloween={
+  warm:[
+  "¿Qué es lo que más te emociona de ir al club en Halloween?",
+  "¿Qué te pone más nervioso: mirar, que te miren o participar?",
+  "¿Qué disfraz quieres que yo lleve para volverte loco/a?",
+  "¿Qué disfraz tuyo crees que va a llamar más la atención?",
+  "¿Prefieres llegar, mirar y tomar algo con calma, o lanzarte desde el primer minuto?",
+  "¿Qué tipo de persona o pareja te gustaría que se nos acercara primero?",
+  "¿Qué harías si alguien me coquetea frente a ti?",
+  "¿Qué es lo que más miedo te da de esa noche?",
+  "¿Qué señal secreta usamos para decir 'para' o 'vámonos' sin dar explicaciones?",
+  "¿Cuál es tu 'no' absoluto esa noche?",
+  "¿Qué quieres que nunca cambie entre nosotros, pase lo que pase en el club?",
+  "¿Con quién te gustaría coquetear primero: un hombre, una mujer o una pareja?",
+  "¿Te excita más que coqueteen contigo o verme coquetear con otros?",
+  "¿Cuántas copas son tu límite para seguir tomando buenas decisiones?",
+  "¿Qué quieres que hagamos justo antes de entrar para calentarnos?",
+  "¿Qué quieres que te susurre antes de separarnos un rato?",
+  "¿Estarías más cómodo/a con que bese a otra persona o con que toque a otra persona?",
+  "¿Qué te da más seguridad: no separarnos nunca o poder separarnos un rato?",
+  "¿Qué quieres que hagamos al llegar a casa después de la fiesta?",
+  "¿Qué cosa nuestra crees que va a impresionar a los demás?",
+  "¿Qué te da curiosidad ver en un club y nunca has visto?",
+  "¿Cómo manejamos que uno de los dos se sienta incómodo a media noche?",
+  "¿Cuál es la frase más atrevida que le dirías a una pareja que te gusta?",
+  "¿Qué te daría celos... y qué te haría sentir poderoso/a?",
+  "¿Dejarías que otra persona te bese el cuello mientras yo miro?",
+  "¿Qué tan pronto en la noche te gustaría que pase algo?",
+  "¿Prefieres pasar a otro nivel con alguien que ya conocemos o con completos desconocidos?",
+  "¿Qué parte de mi cuerpo quieres que luzca más con mi disfraz?",
+  "¿Quieres que yo te escoja a alguien, o prefieres escoger tú?",
+  "¿Qué regla nueva quieres que pongamos antes de llegar?"
+],
+  spicy:[
+  "¿Te excita que otras personas nos miren mientras nos besamos?",
+  "¿Te dejarías tocar por otra persona mientras yo miro?",
+  "¿Qué parte de tu cuerpo te gustaría que otra persona besara mientras yo miro?",
+  "¿A quién escogerías para que me bese mientras tú miras?",
+  "¿Cómo se ve tu 'soft swap' perfecto: besos y caricias con otra pareja, sin llegar a más?",
+  "¿Hasta dónde llegarías la primera vez con otra persona en un club?",
+  "¿Prefieres mirar a otra pareja o que te miren a ti?",
+  "¿Te excitaría hacerme un baile privado frente a otras personas?",
+  "¿Qué harías si otra persona te pide permiso para tocarme? ¿Y para besarme?",
+  "¿Qué te gustaría que yo le hiciera a otra persona mientras tú miras?",
+  "¿Te gustaría que te acariciara otra pareja mientras yo lo permito?",
+  "¿Qué tipo de persona te gustaría tener cerca mientras tú y yo estamos juntos en una sala?",
+  "¿Te gustaría que alguien más se uniera mientras nosotros estamos en lo nuestro?",
+  "¿Te excita la idea de estar con otra pareja en la misma habitación, cada quien con su pareja?",
+  "¿Te excita más verme disfrutar con alguien o que yo te vea disfrutar con alguien?",
+  "¿Qué palabra quieres que te diga al oído para decirte 'puedes seguir'?",
+  "¿Qué harías si alguien del club te gusta más de lo esperado?",
+  "¿Quieres que después te cuente con detalle lo que hice con otra persona, o prefieres no saber?",
+  "¿Te excitaría que me desnudaran frente a ti?",
+  "¿Te gustaría desnudarte frente a un grupo? ¿Qué tan lejos?",
+  "¿Con quién te gustaría compartir un beso a tres?",
+  "¿Qué es lo que más te excita de ser exhibido/a?",
+  "¿Quién debería acercarse primero a nosotros: otra mujer, otro hombre o una pareja?",
+  "¿Qué harías si otra pareja nos propone juntarnos los cuatro?",
+  "¿Qué parte de la noche quieres que sea solo nuestra, sin nadie más?",
+  "¿Qué necesitas de mí para sentirte cómodo/a con un intercambio?",
+  "¿Qué tan intenso quieres que sea el calentamiento en la barra, el pasillo o el jacuzzi?",
+  "¿Cuál sería tu primer movimiento con alguien que te atrae?",
+  "¿Te gustaría que te agarren por sorpresa de la mano y te lleven a un cuarto?",
+  "¿Qué es lo más morboso que te gustaría ver a otra pareja hacer?"
+],
+  pecado:[
+  "¿Qué te excita más de un trío: ser el centro de atención o ver cómo atienden a tu pareja?",
+  "¿Un trío con otro hombre o con otra mujer: cuál prefieres y por qué?",
+  "¿Qué quieres que le hagan a tu pareja mientras tú participas o miras?",
+  "¿Dejarías que otra persona tenga sexo con tu pareja mientras tú miras?",
+  "¿Hasta dónde llegarías en un intercambio completo? ¿Cuál sería tu límite absoluto?",
+  "¿Qué te prende y qué te preocupa de un intercambio completo?",
+  "¿Te gustaría hacer un 'tren', con varias personas atendiéndote? ¿Cuántas?",
+  "¿Qué papel te gustaría en un tren: el centro de todo o el que mira?",
+  "¿Cuántas personas serían tu fantasía ideal en una sola habitación?",
+  "¿Qué es lo más sucio que te gustaría que pase esa noche, sin filtro?",
+  "¿Qué necesitas de mí para sentirte seguro/a y a la vez libre con otra persona?",
+  "¿Qué quieres que te susurre mientras otra persona te toca?",
+  "¿Qué te gustaría que le hicieran a tu pareja mientras tú miras de cerca?",
+  "¿Quieres que me quede contigo cuando termine o que pase a la siguiente persona?",
+  "¿Te gustaría dirigir a los demás o que te dirijan a ti?",
+  "¿Cómo lo quieres esa noche: dulce, intenso o salvaje?",
+  "¿Lo harías en la sala común frente a todos? ¿Con la puerta abierta o cerrada?",
+  "¿Quieres que nos separemos un rato y volvamos a encontrarnos para contarnos todo?",
+  "¿Quién elige a la tercera persona: tú, yo o los dos?",
+  "¿Cuál es el límite más atrevido que te gustaría romper esa noche?",
+  "¿Te excita más lo que vamos a hacer o lo que van a hacer con nosotros?",
+  "¿Qué detalle de tu fantasía nunca me has contado porque te da pena?",
+  "¿Cómo sería la fantasía perfecta de esa noche, paso a paso?",
+  "¿Qué quieres que pase después de todo: abrazo, ducha u otra ronda?",
+  "¿Prefieres un intercambio en la misma habitación o en habitaciones separadas?",
+  "¿Qué te excita más: verme con otra persona o que me vean contigo?",
+  "¿Qué te gustaría pedirme o mandarme cuando estemos con otros?",
+  "¿Qué harías esa noche que jamás te atreverías a hacer en casa?",
+  "¿Qué es lo más salvaje que quieres que te pida esa noche?",
+  "¿Cuál es el escenario más morboso que te imaginas dentro del club?"
+]
+};
+
+/* ===== HALLOWEEN: Las Diablas ===== */
+questions.halloween.warm.push(...[
+  "Dos diablas van a recorrer los tres niveles buscando parejas para jugar: ¿quieres que nos encuentren pronto o prefieres esconderte un rato?",
+  "Si una diabla nos invita a un concurso, ¿decimos que sí de inmediato o lo pensamos?",
+  "¿En qué concurso te gustaría que ganáramos con nuestros disfraces?",
+  "¿Qué parte de nuestros disfraces crees que más va a llamar la atención de las diablas?",
+  "¿Qué juego suave te gustaría que las diablas nos propongan para romper el hielo?",
+  "¿Qué estarías dispuesto/a a hacer para llegar a la gran final?",
+  "¿Qué premio ganarías sin dudar?",
+  "¿En qué nivel del club te gustaría que nos encuentren las diablas primero?",
+  "¿Qué señal usamos si no queremos participar en un juego que nos proponga una diabla?",
+  "¿Quieres que las diablas se fijen en nosotros o prefieres pasar desapercibido hasta el final?"
+]);
+questions.halloween.spicy.push(...[
+  "¿Qué juego le propondrías a las diablas para poner a prueba a nuestra pareja?",
+  "¿Te gustaría un concurso de baile sensual con las diablas como jurado?",
+  "¿Competiríamos por el mejor beso de la noche frente a todos?",
+  "¿Dejarías que una diabla te vende los ojos para adivinar quién te besa?",
+  "¿Te gustaría que las diablas nos reten a otra pareja?",
+  "¿Qué reto en pareja te daría más morbo hacer frente al público?",
+  "¿Hasta dónde te quitarías el disfraz para ganar un concurso?",
+  "¿Quieres que las diablas nos separen para un juego y luego nos reencuentren?",
+  "¿Te gustaría que una diabla te susurre una orden que solo tú puedes cumplir?",
+  "¿Qué reto de seducción me pondrías delante de las diablas?"
+]);
+questions.halloween.pecado.push(...[
+  "¿Qué es lo más atrevido que les pedirías a las diablas que nos hagan hacer?",
+  "Si las diablas organizan una prueba de 'quién aguanta más', ¿cuál sería la más morbosa?",
+  "Si una diabla se une a un juego, ¿hasta dónde te gustaría que llegara? (siempre que el club y ella lo permitan)",
+  "¿Qué prueba sucia te gustaría ganar en la gran final?",
+  "¿Qué te excita más: que una diabla te dé una orden a ti o que me la dé a mí?",
+  "¿Dejarías que las diablas nos usen de ejemplo para animar a otras parejas?",
+  "¿Qué juego con otra pareja te gustaría que organicen las diablas?",
+  "¿Hasta dónde llegarías en un juego con otra pareja si una diabla lo propone?",
+  "¿Te excitaría que una diabla nos mirara mientras hacemos lo nuestro?",
+  "¿Qué penitencia te gustaría que las diablas nos pongan si perdemos?"
+]);
+
 /* =========================================================
    NUEVO MOTOR PÉCADO — HOME / PAREJA / GRUPO / GUARDADO
 ========================================================= */
@@ -943,6 +1083,7 @@ let usedQuestions = {
   past:{warm:[],spicy:[],pecado:[]},
   desire:{warm:[],spicy:[],pecado:[]},
   drink:{warm:[],spicy:[],pecado:[]},
+  halloween:{warm:[],spicy:[],pecado:[]},
   dare:{warm:[],spicy:[],pecado:[]}
 };
 
@@ -1027,7 +1168,7 @@ function finishSetup(){
 }
 
 function freshUsed(){
-  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]},dare:{warm:[],spicy:[],pecado:[]}};
+  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]},halloween:{warm:[],spicy:[],pecado:[]},dare:{warm:[],spicy:[],pecado:[]}};
 }
 
 function showCategoryScreen(){showScreen("categoryScreen")}
@@ -1042,7 +1183,7 @@ function chooseIntensity(intensity){
 
 function getQuestions(){return questions[currentCategory][currentIntensity]}
 function getCategoryName(){
-  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO",dare:"🔥 RETO"}[currentCategory];
+  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO",dare:"🔥 RETO",halloween:"🎃 HALLOWEEN"}[currentCategory];
 }
 function getIntensityName(){
   return {warm:"🌶️ CALIENTE",spicy:"🌶️🌶️ MUY PICANTE",pecado:"🌶️🌶️🌶️ PÉCADO"}[currentIntensity];
@@ -1061,6 +1202,7 @@ function getMechanic(){
 
 function showQuestion(){
   const list=getQuestions();
+  if(!usedQuestions[currentCategory])usedQuestions[currentCategory]={warm:[],spicy:[],pecado:[]};
   let used=usedQuestions[currentCategory][currentIntensity];
   if(used.length>=list.length){usedQuestions[currentCategory][currentIntensity]=[];used=[]}
   let randomIndex;
