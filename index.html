@@ -1076,11 +1076,9 @@ questions.halloween.spicy.push(...[
 ========================================================= */
 /* ===== Preguntas dirigidas a un jugador específico =====
    Solo salen en el turno de ese jugador (el nombre se compara sin
-   mayúsculas ni acentos) y se mezclan al azar con el resto durante la
-   partida. TARGET_CHANCE = probabilidad (0 a 1) de que en su turno toque
-   una de las suyas mientras le queden. Para añadir otro jugador, copia
-   el bloque con su nombre en minúsculas. */
-const TARGET_CHANCE = 0.3;
+   mayúsculas ni acentos) y forman parte del mismo conjunto de preguntas:
+   salen al azar, solo en el turno de ese jugador. Para añadir otro
+   jugador, copia el bloque con su nombre en minúsculas. */
 const targetedQuestions = {
   "magdiel": {
     halloween: {
@@ -1231,38 +1229,48 @@ function getMechanic(){
   return pool[Math.floor(Math.random()*pool.length)];
 }
 
+function targetedTotals(){
+  let total=0,usedT=0;const seen=new Set();
+  players.forEach(p=>{
+    const n=normName(p);if(seen.has(n))return;seen.add(n);
+    total+=(targetedQuestions[n]?.[currentCategory]?.[currentIntensity]||[]).length;
+    usedT+=(usedTargeted[n+"|"+currentCategory+"|"+currentIntensity]||[]).length;
+  });
+  return {total,used:usedT};
+}
+
 function showQuestion(){
   const list=getQuestions();
-  const me=normName(players[currentPlayer]);
-  const tList=targetedQuestions[me]?.[currentCategory]?.[currentIntensity]||[];
-  const tKey=me+"|"+currentCategory+"|"+currentIntensity;
-  if(!usedTargeted[tKey])usedTargeted[tKey]=[];
-  const tLeft=tList.filter(q=>!usedTargeted[tKey].includes(q));
-  if(tLeft.length && Math.random()<TARGET_CHANCE){
-    const tq=tLeft[Math.floor(Math.random()*tLeft.length)];
-    usedTargeted[tKey].push(tq);
-    $("playerName").textContent="TURNO DE "+players[currentPlayer];
-    $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
-    $("questionText").textContent=tq;
-    pecadoApplyMechanic();
-    $("counter").textContent=`${(usedQuestions[currentCategory]?.[currentIntensity]||[]).length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
-    saveGame();
-    return;
-  }
   if(!usedQuestions[currentCategory])usedQuestions[currentCategory]={warm:[],spicy:[],pecado:[]};
   let used=usedQuestions[currentCategory][currentIntensity];
-  if(used.length>=list.length){usedQuestions[currentCategory][currentIntensity]=[];used=[]}
-  let randomIndex;
-  do{randomIndex=Math.floor(Math.random()*list.length)}while(used.includes(randomIndex));
-  used.push(randomIndex);
+  const me=normName(players[currentPlayer]);
+  const myT=targetedQuestions[me]?.[currentCategory]?.[currentIntensity]||[];
+  const tKey=me+"|"+currentCategory+"|"+currentIntensity;
+  if(!usedTargeted[tKey])usedTargeted[tKey]=[];
+  // Pool de este turno: preguntas generales sin usar + las dirigidas a este jugador sin usar
+  const eligible=()=>{
+    const g=[];for(let i=0;i<list.length;i++)if(!used.includes(i))g.push({gi:i});
+    const t=myT.filter(q=>!usedTargeted[tKey].includes(q)).map(q=>({tq:q}));
+    return g.concat(t);
+  };
+  let pool=eligible();
+  if(!pool.length){
+    usedQuestions[currentCategory][currentIntensity]=[];
+    used=usedQuestions[currentCategory][currentIntensity];
+    usedTargeted[tKey]=[];
+    pool=eligible();
+  }
+  const pick=pool[Math.floor(Math.random()*pool.length)];
+  let text;
+  if(pick.tq!==undefined){usedTargeted[tKey].push(pick.tq);text=pick.tq}
+  else{used.push(pick.gi);text=list[pick.gi]}
 
-  $("playerName").textContent =
-    mode==="couple" ? "TURNO DE "+players[currentPlayer] :
-    "TURNO DE "+players[currentPlayer];
+  $("playerName").textContent="TURNO DE "+players[currentPlayer];
   $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
-  $("questionText").textContent=list[randomIndex];
+  $("questionText").textContent=text;
   pecadoApplyMechanic();
-  $("counter").textContent=`${used.length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
+  const tt=targetedTotals();
+  $("counter").textContent=`${used.length+tt.used} / ${list.length+tt.total} preguntas usadas • ${questionNumber+1} en esta sesión`;
   saveGame();
 }
 
