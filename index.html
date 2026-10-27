@@ -1013,12 +1013,6 @@ questions.halloween={
   "¿Te excitaría un gangbang en el que varias personas se turnen para tenerte mientras yo miro de cerca?",
   "¿Cuántas personas a la vez serían tu fantasía en un gangbang... y cuántas tu límite?",
   "¿Cómo sería tu gangbang perfecto: quién, cuántos, dónde y qué le dirías a cada uno al terminar?",
-  "Si tuvieras que conseguirle una mujer a tu pareja esta noche, ¿cómo te le acercarías y qué le dirías para convencerla?",
-  "¿Qué le dirías al esposo de esa mujer para que te deje ver cómo tu pareja tiene sexo con ella?",
-  "¿Cuántas mujeres estarías dispuesto/a a conseguirle a tu pareja para que se acueste con ellas a lo largo de la noche?",
-  "¿Cuántas mujeres a la vez te excitaría ver encima de tu pareja, y qué querrías que le hicieran?",
-  "¿Qué le susurrarías a tu pareja justo antes de que se vaya con la mujer que le conseguiste?",
-  "¿Te excitaría darle órdenes a tu pareja sobre lo que debe hacerle a cada mujer mientras tú miras?",
   "¿Qué te excita más de un trío: ser el centro de atención o ver cómo atienden a tu pareja?",
   "¿Un trío con otro hombre o con otra mujer: cuál prefieres y por qué?",
   "¿Qué quieres que le hagan a tu pareja mientras tú participas o miras?",
@@ -1029,7 +1023,6 @@ questions.halloween={
   "¿Qué necesitas de mí para sentirte seguro/a y a la vez libre con otra persona?",
   "¿Qué quieres que te susurre mientras otra persona te toca?",
   "¿Te gustaría dirigir a los demás o que te dirijan a ti?",
-  "Si nos cruzamos con alguien de talla XL, ¿te gustaría aprovechar la oportunidad y probarlo?",
   "¿Lo harías en la sala común frente a todos? ¿Con la puerta abierta o cerrada?",
   "¿Quién elige a la tercera persona: tú, yo o los dos?",
   "¿Cuál es el límite más atrevido que te gustaría romper esa noche?",
@@ -1043,7 +1036,14 @@ questions.halloween={
   "¿Qué parte de mi cuerpo quieres que otra persona recorra primero con la boca?",
   "¿Quieres que te diga en voz alta lo que me gustaría que otras personas te hagan?",
   "¿Te gustaría que nos turnemos con otra pareja, dos y dos, intercambiando cada tanto?",
-  "¿Qué quieres que te hagan hasta que ya no puedas más?"
+  "¿Qué quieres que te hagan hasta que ya no puedas más?",
+  "¿Qué es lo más atrevido que te dejarías hacer frente a un cuarto lleno de gente mirando?",
+  "¿Qué tipo de persona del club te haría olvidar todas tus reglas por una noche?",
+  "¿Te excitaría que nos separemos y nos juntemos al final para contarnos todo con detalles sucios?",
+  "¿Qué parte del cuerpo de otra persona te gustaría probar primero, sin pena?",
+  "¿Qué te gustaría que otra pareja nos haga delante de todos que nunca hemos hecho solos?",
+  "¿Cuál es la cosa más sucia que dirías en voz alta frente a desconocidos en pleno juego?",
+  "¿Cuál es tu plan para que esta noche sea inolvidable: a quién, cuántos y hasta dónde?"
 ]
 };
 
@@ -1081,6 +1081,28 @@ questions.halloween.spicy.push(...[
 /* =========================================================
    NUEVO MOTOR PÉCADO — HOME / PAREJA / GRUPO / GUARDADO
 ========================================================= */
+/* ===== Preguntas dirigidas a un jugador específico =====
+   Solo salen en el turno de ese jugador (el nombre se compara sin
+   mayúsculas ni acentos) y aparecen primero, antes del resto. Para
+   añadir otro jugador, copia el bloque con su nombre en minúsculas. */
+const targetedQuestions = {
+  "magdiel": {
+    halloween: {
+      pecado: [
+      "Si tuvieras que conseguirle una mujer a tu pareja esta noche, ¿cómo te le acercarías y qué le dirías para convencerla?",
+      "¿Qué le dirías al esposo de esa mujer para que te deje ver cómo tu pareja tiene sexo con ella?",
+      "¿Cuántas mujeres estarías dispuesto/a a conseguirle a tu pareja para que se acueste con ellas a lo largo de la noche?",
+      "¿Cuántas mujeres a la vez te excitaría ver encima de tu pareja, y qué querrías que le hicieran?",
+      "¿Qué le susurrarías a tu pareja justo antes de que se vaya con la mujer que le conseguiste?",
+      "¿Te excitaría darle órdenes a tu pareja sobre lo que debe hacerle a cada mujer mientras tú miras?",
+      "Si nos cruzamos con alguien de talla XL, ¿te gustaría aprovechar la oportunidad y probarlo?"
+]
+    }
+  }
+};
+let usedTargeted = {};
+function normName(n){return String(n||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase()}
+
 let players = [];
 let mode = "";
 let currentPlayer = 0;
@@ -1175,7 +1197,7 @@ function finishSetup(){
   }
   players=vals;
   currentPlayer=0; questionNumber=0; drinkCount=0; skipCount=0; dareCount=0; sessionStarted=true;
-  usedQuestions = freshUsed();
+  usedQuestions = freshUsed(); usedTargeted = {};
   saveGame();
   showScreen("categoryScreen");
 }
@@ -1215,6 +1237,22 @@ function getMechanic(){
 
 function showQuestion(){
   const list=getQuestions();
+  const me=normName(players[currentPlayer]);
+  const tList=targetedQuestions[me]?.[currentCategory]?.[currentIntensity]||[];
+  const tKey=me+"|"+currentCategory+"|"+currentIntensity;
+  if(!usedTargeted[tKey])usedTargeted[tKey]=[];
+  const tLeft=tList.filter(q=>!usedTargeted[tKey].includes(q));
+  if(tLeft.length){
+    const tq=tLeft[Math.floor(Math.random()*tLeft.length)];
+    usedTargeted[tKey].push(tq);
+    $("playerName").textContent="TURNO DE "+players[currentPlayer];
+    $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
+    $("questionText").textContent=tq;
+    pecadoApplyMechanic();
+    $("counter").textContent=`${(usedQuestions[currentCategory]?.[currentIntensity]||[]).length} / ${list.length} preguntas usadas • ${questionNumber+1} en esta sesión`;
+    saveGame();
+    return;
+  }
   if(!usedQuestions[currentCategory])usedQuestions[currentCategory]={warm:[],spicy:[],pecado:[]};
   let used=usedQuestions[currentCategory][currentIntensity];
   if(used.length>=list.length){usedQuestions[currentCategory][currentIntensity]=[];used=[]}
@@ -1269,7 +1307,7 @@ function showModal(title,text){
 
 function saveGame(){
   if(!sessionStarted || players.length<2)return;
-  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted};
+  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted,usedTargeted};
   localStorage.setItem("pecadoSave",JSON.stringify(data));
   updateContinueButton();
 }
@@ -1284,6 +1322,7 @@ function continueGame(){
   const d=loadSaved();
   if(!d)return;
   ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted}=d);
+  usedTargeted=d.usedTargeted||{};
   if(!players?.length)return;
   if(!currentCategory || !currentIntensity) showScreen("categoryScreen");
   else {showScreen("gameScreen");showQuestion()}
@@ -1297,7 +1336,7 @@ function clearSavedGame(){
 function newGame(){
   const d=loadSaved();
   if(d){mode=d.mode;players=d.players}
-  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;dareCount=0;usedQuestions=freshUsed();
+  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;dareCount=0;usedQuestions=freshUsed();usedTargeted={};
   sessionStarted=true;showScreen("categoryScreen");saveGame();
 }
 function showSettings(){showScreen("settingsScreen")}
