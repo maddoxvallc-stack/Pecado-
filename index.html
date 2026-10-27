@@ -1077,7 +1077,8 @@ questions.halloween.spicy.push(...[
 /* ===== Preguntas dirigidas a un jugador específico =====
    Solo salen en el turno de ese jugador (el nombre se compara sin
    mayúsculas ni acentos) y forman parte del mismo conjunto de preguntas:
-   salen al azar, solo en el turno de ese jugador. Para añadir otro
+   salen en turnos al azar de ese jugador (nunca en los 2 primeros) y
+   están garantizadas: todas salen dentro de su parte de la ronda. Para añadir otro
    jugador, copia el bloque con su nombre en minúsculas. */
 const targetedQuestions = {
   "magdiel": {
@@ -1095,6 +1096,7 @@ const targetedQuestions = {
   }
 };
 let usedTargeted = {};
+let targetPlan = {};
 function normName(n){return String(n||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase()}
 
 let players = [];
@@ -1191,7 +1193,7 @@ function finishSetup(){
   }
   players=vals;
   currentPlayer=0; questionNumber=0; drinkCount=0; skipCount=0; dareCount=0; sessionStarted=true;
-  usedQuestions = freshUsed(); usedTargeted = {};
+  usedQuestions = freshUsed(); usedTargeted = {}; targetPlan={};
   saveGame();
   showScreen("categoryScreen");
 }
@@ -1247,23 +1249,35 @@ function showQuestion(){
   const myT=targetedQuestions[me]?.[currentCategory]?.[currentIntensity]||[];
   const tKey=me+"|"+currentCategory+"|"+currentIntensity;
   if(!usedTargeted[tKey])usedTargeted[tKey]=[];
-  // Pool de este turno: preguntas generales sin usar + las dirigidas a este jugador sin usar
-  const eligible=()=>{
-    const g=[];for(let i=0;i<list.length;i++)if(!used.includes(i))g.push({gi:i});
-    const t=myT.filter(q=>!usedTargeted[tKey].includes(q)).map(q=>({tq:q}));
-    return g.concat(t);
-  };
-  let pool=eligible();
-  if(!pool.length){
-    usedQuestions[currentCategory][currentIntensity]=[];
-    used=usedQuestions[currentCategory][currentIntensity];
-    usedTargeted[tKey]=[];
-    pool=eligible();
+  const tLeft=myT.filter(q=>!usedTargeted[tKey].includes(q));
+
+  // Plan garantizado: sus preguntas caen en turnos al azar (nunca los 2 primeros)
+  // dentro de la parte de la ronda que le toca, así salen todas sin agruparse.
+  let plan=targetPlan[tKey];
+  if(myT.length&&!plan){
+    const W=Math.max(myT.length+2,Math.floor((list.length+targetedTotals().total)/Math.max(1,players.length)));
+    const cand=[];for(let i=2;i<W;i++)cand.push(i);
+    for(let i=cand.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cand[i],cand[j]]=[cand[j],cand[i]]}
+    plan=targetPlan[tKey]={slots:cand.slice(0,myT.length).sort((x,y)=>x-y),n:0};
   }
-  const pick=pool[Math.floor(Math.random()*pool.length)];
+  const turnIdx=plan?plan.n:0;
+  if(plan)plan.n++;
+  const lastSlot=plan?plan.slots[plan.slots.length-1]:-1;
+
   let text;
-  if(pick.tq!==undefined){usedTargeted[tKey].push(pick.tq);text=pick.tq}
-  else{used.push(pick.gi);text=list[pick.gi]}
+  if(plan&&tLeft.length&&(plan.slots.includes(turnIdx)||turnIdx>lastSlot)){
+    text=tLeft[Math.floor(Math.random()*tLeft.length)];
+    usedTargeted[tKey].push(text);
+  }else{
+    let g=[];for(let i=0;i<list.length;i++)if(!used.includes(i))g.push(i);
+    if(!g.length){
+      usedQuestions[currentCategory][currentIntensity]=[];
+      used=usedQuestions[currentCategory][currentIntensity];
+      for(let i=0;i<list.length;i++)g.push(i);
+    }
+    const gi=g[Math.floor(Math.random()*g.length)];
+    used.push(gi);text=list[gi];
+  }
 
   $("playerName").textContent="TURNO DE "+players[currentPlayer];
   $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
@@ -1311,7 +1325,7 @@ function showModal(title,text){
 
 function saveGame(){
   if(!sessionStarted || players.length<2)return;
-  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted,usedTargeted};
+  const data={players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted,usedTargeted,targetPlan};
   localStorage.setItem("pecadoSave",JSON.stringify(data));
   updateContinueButton();
 }
@@ -1326,7 +1340,7 @@ function continueGame(){
   const d=loadSaved();
   if(!d)return;
   ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted}=d);
-  usedTargeted=d.usedTargeted||{};
+  usedTargeted=d.usedTargeted||{};targetPlan=d.targetPlan||{};
   if(!players?.length)return;
   if(!currentCategory || !currentIntensity) showScreen("categoryScreen");
   else {showScreen("gameScreen");showQuestion()}
@@ -1340,7 +1354,7 @@ function clearSavedGame(){
 function newGame(){
   const d=loadSaved();
   if(d){mode=d.mode;players=d.players}
-  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;dareCount=0;usedQuestions=freshUsed();usedTargeted={};
+  currentPlayer=0;questionNumber=0;drinkCount=0;skipCount=0;dareCount=0;usedQuestions=freshUsed();usedTargeted={}; targetPlan={};
   sessionStarted=true;showScreen("categoryScreen");saveGame();
 }
 function showSettings(){showScreen("settingsScreen")}
