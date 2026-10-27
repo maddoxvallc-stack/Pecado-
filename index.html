@@ -1036,14 +1036,7 @@ questions.halloween={
   "¿Qué parte de mi cuerpo quieres que otra persona recorra primero con la boca?",
   "¿Quieres que te diga en voz alta lo que me gustaría que otras personas te hagan?",
   "¿Te gustaría que nos turnemos con otra pareja, dos y dos, intercambiando cada tanto?",
-  "¿Qué quieres que te hagan hasta que ya no puedas más?",
-  "¿Qué es lo más atrevido que te dejarías hacer frente a un cuarto lleno de gente mirando?",
-  "¿Qué tipo de persona del club te haría olvidar todas tus reglas por una noche?",
-  "¿Te excitaría que nos separemos y nos juntemos al final para contarnos todo con detalles sucios?",
-  "¿Qué parte del cuerpo de otra persona te gustaría probar primero, sin pena?",
-  "¿Qué te gustaría que otra pareja nos haga delante de todos que nunca hemos hecho solos?",
-  "¿Cuál es la cosa más sucia que dirías en voz alta frente a desconocidos en pleno juego?",
-  "¿Cuál es tu plan para que esta noche sea inolvidable: a quién, cuántos y hasta dónde?"
+  "¿Qué quieres que te hagan hasta que ya no puedas más?"
 ]
 };
 
@@ -1083,8 +1076,11 @@ questions.halloween.spicy.push(...[
 ========================================================= */
 /* ===== Preguntas dirigidas a un jugador específico =====
    Solo salen en el turno de ese jugador (el nombre se compara sin
-   mayúsculas ni acentos) y aparecen primero, antes del resto. Para
-   añadir otro jugador, copia el bloque con su nombre en minúsculas. */
+   mayúsculas ni acentos) y se mezclan al azar con el resto durante la
+   partida. TARGET_CHANCE = probabilidad (0 a 1) de que en su turno toque
+   una de las suyas mientras le queden. Para añadir otro jugador, copia
+   el bloque con su nombre en minúsculas. */
+const TARGET_CHANCE = 0.3;
 const targetedQuestions = {
   "magdiel": {
     halloween: {
@@ -1242,7 +1238,7 @@ function showQuestion(){
   const tKey=me+"|"+currentCategory+"|"+currentIntensity;
   if(!usedTargeted[tKey])usedTargeted[tKey]=[];
   const tLeft=tList.filter(q=>!usedTargeted[tKey].includes(q));
-  if(tLeft.length){
+  if(tLeft.length && Math.random()<TARGET_CHANCE){
     const tq=tLeft[Math.floor(Math.random()*tLeft.length)];
     usedTargeted[tKey].push(tq);
     $("playerName").textContent="TURNO DE "+players[currentPlayer];
