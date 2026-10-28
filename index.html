@@ -84,11 +84,15 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
 .mechanic{
   margin:18px 0 4px;font-size:12px;letter-spacing:2px;color:#c9a7c0;font-weight:900
 }
+.en{display:none;font-size:19px;line-height:1.4;font-weight:600;opacity:.85;font-style:italic;margin:-10px 3px 18px;color:#ffd9ec}
+.en.show{display:block}
+.langbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;margin:0 3px 16px;cursor:pointer}
 .question{font-size:28px;line-height:1.34;font-weight:800;margin:18px 3px 25px}
 .action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .drink{background:linear-gradient(135deg,#6d1111,#d93636)}
 .complete{background:linear-gradient(135deg,#7d1cff,#ff287d)}
 .skip{background:#342038}.next{background:linear-gradient(135deg,#ff287d,#a21cff)}
+.action-row .complete{grid-column:1 / -1;order:-1;font-size:17px;letter-spacing:.5px;box-shadow:0 10px 28px rgba(157,28,255,.3)}
 .back{background:transparent;border:1px solid #56304f;color:#c9a9c1;font-size:12px}
 .counter{text-align:center;color:#8f7189;font-size:12px;margin-top:14px}
 .stats{
@@ -180,6 +184,8 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
         <div class="mechanic" id="mechanicLabel">RESPONDE</div>
         <div class="small" id="mechanicInstruction"></div>
         <div class="question" id="questionText"></div>
+        <div class="en" id="questionEn"></div>
+        <button class="langbtn" id="langBtn" onclick="toggleEnglish()">🌐 English</button>
         <div class="action-row">
           <button class="drink" onclick="takeDrink()">🍷 BEBER</button>
           <button class="skip" onclick="skipQuestion()">SALTAR</button>
@@ -1099,6 +1105,163 @@ let usedTargeted = {};
 let targetPlan = {};
 function normName(n){return String(n||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase()}
 
+/* ===== Traducción al inglés (botón 🌐) =====
+   EN guarda la traducción de cada pregunta de Halloween. Las preguntas
+   sin traducción muestran un enlace a Google Translate. */
+const EN = {
+ "¿Qué es lo que más te emociona de ir al club en Halloween?": "What are you most excited about for going to the club on Halloween?",
+ "¿Qué te pone más nervioso: mirar, que te miren o participar?": "What makes you more nervous: watching, being watched, or taking part?",
+ "¿Qué disfraz quieres que yo lleve para volverte loco/a?": "What costume do you want me to wear to drive you wild?",
+ "¿Qué disfraz tuyo crees que va a llamar más la atención?": "Which of your costume pieces do you think will turn the most heads?",
+ "¿Prefieres llegar, mirar y tomar algo con calma, o lanzarte desde el primer minuto?": "Would you rather arrive, watch and sip a drink calmly, or dive in from the first minute?",
+ "¿Qué tipo de persona o pareja te gustaría que se nos acercara primero?": "What kind of person or couple would you like to approach us first?",
+ "¿Qué harías si alguien me coquetea frente a ti?": "What would you do if someone flirted with me in front of you?",
+ "¿Qué es lo que más miedo te da de esa noche?": "What scares you the most about that night?",
+ "¿Qué señal secreta usamos para decir 'para' o 'vámonos' sin dar explicaciones?": "What secret signal do we use to say 'stop' or 'let's go' without explanations?",
+ "¿Cuál es tu 'no' absoluto esa noche?": "What is your absolute 'no' that night?",
+ "¿Qué quieres que nunca cambie entre nosotros, pase lo que pase en el club?": "What do you want to never change between us, no matter what happens at the club?",
+ "¿Con quién te gustaría coquetear primero: un hombre, una mujer o una pareja?": "Who would you like to flirt with first: a man, a woman, or a couple?",
+ "¿Te excita más que coqueteen contigo o verme coquetear con otros?": "Does it turn you on more when people flirt with you, or watching me flirt with others?",
+ "¿Cuántas copas son tu límite para seguir tomando buenas decisiones?": "How many drinks is your limit to keep making good decisions?",
+ "¿Qué quieres que hagamos justo antes de entrar para calentarnos?": "What do you want us to do right before going in to get warmed up?",
+ "¿Qué quieres que te susurre antes de separarnos un rato?": "What do you want me to whisper to you before we separate for a while?",
+ "¿Estarías más cómodo/a con que bese a otra persona o con que toque a otra persona?": "Would you be more comfortable with me kissing another person or with me touching another person?",
+ "¿Qué te da más seguridad: no separarnos nunca o poder separarnos un rato?": "What makes you feel safer: never separating, or being able to split up for a while?",
+ "¿Qué quieres que hagamos al llegar a casa después de la fiesta?": "What do you want us to do when we get home after the party?",
+ "¿Qué cosa nuestra crees que va a impresionar a los demás?": "What is it about the two of us that you think will impress everyone else?",
+ "¿Qué te da curiosidad ver en un club y nunca has visto?": "What are you curious to see at a club that you've never seen?",
+ "¿Cómo manejamos que uno de los dos se sienta incómodo a media noche?": "How do we handle it if one of us feels uncomfortable in the middle of the night?",
+ "¿Cuál es la frase más atrevida que le dirías a una pareja que te gusta?": "What's the boldest line you'd say to a couple you like?",
+ "¿Qué te daría celos... y qué te haría sentir poderoso/a?": "What would make you jealous... and what would make you feel powerful?",
+ "¿Dejarías que otra persona te bese el cuello mientras yo miro?": "Would you let another person kiss your neck while I watch?",
+ "¿Qué tan pronto en la noche te gustaría que pase algo?": "How soon in the night would you like something to happen?",
+ "¿Prefieres pasar a otro nivel con alguien que ya conocemos o con completos desconocidos?": "Would you rather take things further with someone we already know or with complete strangers?",
+ "¿Qué parte de mi cuerpo quieres que luzca más con mi disfraz?": "Which part of my body do you want my costume to show off the most?",
+ "¿Quieres que yo te escoja a alguien, o prefieres escoger tú?": "Do you want me to pick someone for you, or would you rather pick yourself?",
+ "¿Qué regla nueva quieres que pongamos antes de llegar?": "What new rule do you want us to set before we arrive?",
+ "Dos diablas van a recorrer los tres niveles buscando parejas para jugar: ¿quieres que nos encuentren pronto o prefieres esconderte un rato?": "Two she-devils will roam all three levels looking for couples to play with: do you want them to find us soon, or would you rather hide for a while?",
+ "Si una diabla nos invita a un concurso, ¿decimos que sí de inmediato o lo pensamos?": "If a she-devil invites us to a contest, do we say yes right away or think about it?",
+ "¿En qué concurso te gustaría que ganáramos con nuestros disfraces?": "Which contest would you like us to win with our costumes?",
+ "¿Qué parte de nuestros disfraces crees que más va a llamar la atención de las diablas?": "Which part of our costumes do you think will catch the she-devils' eye the most?",
+ "¿Qué juego suave te gustaría que las diablas nos propongan para romper el hielo?": "What gentle game would you like the she-devils to give us to break the ice?",
+ "¿Qué estarías dispuesto/a a hacer para llegar a la gran final?": "What would you be willing to do to make it to the grand final?",
+ "¿Qué premio ganarías sin dudar?": "What prize would you win without hesitation?",
+ "¿En qué nivel del club te gustaría que nos encuentren las diablas primero?": "On which level of the club would you like the she-devils to find us first?",
+ "¿Qué señal usamos si no queremos participar en un juego que nos proponga una diabla?": "What signal do we use if we don't want to take part in a game a she-devil proposes?",
+ "¿Quieres que las diablas se fijen en nosotros o prefieres pasar desapercibido hasta el final?": "Do you want the she-devils to notice us, or would you rather go unnoticed until the end?",
+ "¿Te excita que otras personas nos miren mientras nos besamos?": "Does it turn you on when other people watch us kiss?",
+ "¿Te dejarías tocar por otra persona mientras yo miro?": "Would you let another person touch you while I watch?",
+ "¿Qué parte de tu cuerpo te gustaría que otra persona besara mientras yo miro?": "Which part of your body would you like another person to kiss while I watch?",
+ "¿A quién escogerías para que me bese mientras tú miras?": "Who would you pick to kiss me while you watch?",
+ "¿Cómo se ve tu 'soft swap' perfecto: besos y caricias con otra pareja, sin llegar a más?": "What does your perfect 'soft swap' look like: kissing and caressing with another couple, without going further?",
+ "¿Hasta dónde llegarías la primera vez con otra persona en un club?": "How far would you go the first time with another person at a club?",
+ "¿Prefieres mirar a otra pareja o que te miren a ti?": "Would you rather watch another couple or be watched yourself?",
+ "¿Te excitaría hacerme un baile privado frente a otras personas?": "Would it turn you on to give me a private dance in front of other people?",
+ "¿Qué harías si otra persona te pide permiso para tocarme? ¿Y para besarme?": "What would you do if another person asks you for permission to touch me? And to kiss me?",
+ "¿Qué te gustaría que yo le hiciera a otra persona mientras tú miras?": "What would you like me to do to another person while you watch?",
+ "¿Te gustaría que te acariciara otra pareja mientras yo lo permito?": "Would you like another couple to caress you while I allow it?",
+ "¿Qué tipo de persona te gustaría tener cerca mientras tú y yo estamos juntos en una sala?": "What kind of person would you like to have nearby while you and I are together in a room?",
+ "¿Te gustaría que alguien más se uniera mientras nosotros estamos en lo nuestro?": "Would you like someone else to join us while we're in the middle of it?",
+ "¿Te excita la idea de estar con otra pareja en la misma habitación, cada quien con su pareja?": "Does the idea of being with another couple in the same room, each with their own partner, turn you on?",
+ "¿Te excita más verme disfrutar con alguien o que yo te vea disfrutar con alguien?": "Does it turn you on more to watch me enjoy myself with someone, or to have me watch you enjoy yourself with someone?",
+ "¿Qué palabra quieres que te diga al oído para decirte 'puedes seguir'?": "What word do you want me to say in your ear to tell you 'you can keep going'?",
+ "¿Qué harías si alguien del club te gusta más de lo esperado?": "What would you do if someone at the club attracts you more than expected?",
+ "¿Quieres que después te cuente con detalle lo que hice con otra persona, o prefieres no saber?": "Do you want me to tell you in detail afterward what I did with another person, or would you rather not know?",
+ "¿Te excitaría que me desnudaran frente a ti?": "Would it turn you on if they undressed me in front of you?",
+ "¿Te gustaría desnudarte frente a un grupo? ¿Qué tan lejos?": "Would you like to undress in front of a group? How far?",
+ "¿Con quién te gustaría compartir un beso a tres?": "Who would you like to share a three-way kiss with?",
+ "¿Qué es lo que más te excita de ser exhibido/a?": "What turns you on most about being exhibited?",
+ "¿Quién debería acercarse primero a nosotros: otra mujer, otro hombre o una pareja?": "Who should approach us first: another woman, another man, or a couple?",
+ "¿Qué harías si otra pareja nos propone juntarnos los cuatro?": "What would you do if another couple proposes the four of us get together?",
+ "¿Qué parte de la noche quieres que sea solo nuestra, sin nadie más?": "Which part of the night do you want to be just ours, with no one else?",
+ "¿Qué necesitas de mí para sentirte cómodo/a con un intercambio?": "What do you need from me to feel comfortable with a swap?",
+ "¿Qué tan intenso quieres que sea el calentamiento en la barra, el pasillo o el jacuzzi?": "How intense do you want the warm-up at the bar, the hallway or the jacuzzi to be?",
+ "¿Cuál sería tu primer movimiento con alguien que te atrae?": "What would be your first move with someone who attracts you?",
+ "¿Te gustaría que te agarren por sorpresa de la mano y te lleven a un cuarto?": "Would you like to be grabbed by the hand by surprise and taken to a room?",
+ "¿Qué es lo más morboso que te gustaría ver a otra pareja hacer?": "What's the most deliciously naughty thing you'd like to watch another couple do?",
+ "¿Qué juego le propondrías a las diablas para poner a prueba a nuestra pareja?": "What game would you propose to the she-devils to put our relationship to the test?",
+ "¿Te gustaría un concurso de baile sensual con las diablas como jurado?": "Would you like a sensual dance contest with the she-devils as judges?",
+ "¿Competiríamos por el mejor beso de la noche frente a todos?": "Would we compete for the best kiss of the night in front of everyone?",
+ "¿Dejarías que una diabla te vende los ojos para adivinar quién te besa?": "Would you let a she-devil blindfold you to guess who's kissing you?",
+ "¿Te gustaría que las diablas nos reten a otra pareja?": "Would you like the she-devils to challenge us against another couple?",
+ "¿Qué reto en pareja te daría más morbo hacer frente al público?": "What couple's challenge would turn you on most to do in front of an audience?",
+ "¿Hasta dónde te quitarías el disfraz para ganar un concurso?": "How much of your costume would you take off to win a contest?",
+ "¿Quieres que las diablas nos separen para un juego y luego nos reencuentren?": "Do you want the she-devils to separate us for a game and then bring us back together?",
+ "¿Te gustaría que una diabla te susurre una orden que solo tú puedes cumplir?": "Would you like a she-devil to whisper an order that only you can carry out?",
+ "¿Qué reto de seducción me pondrías delante de las diablas?": "What seduction challenge would you give me in front of the she-devils?",
+ "¿Te excitaría ser el centro de atención de varias personas a la vez?": "Would it turn you on to be the center of attention of several people at once?",
+ "¿Te gustaría ver a otros hacer un 'tren' antes de decidir si quieres probarlo?": "Would you like to watch others do a 'train' before deciding whether you want to try it?",
+ "¿Qué te parece la idea de que varias personas se turnen para atenderte?": "What do you think of the idea of several people taking turns pleasing you?",
+ "¿Qué es lo más atrevido que les pedirías a las diablas que nos hagan hacer?": "What is the boldest thing you would ask the she-devils to make us do?",
+ "¿Qué prueba sucia te gustaría ganar en la gran final?": "What dirty challenge would you like to win in the grand final?",
+ "¿Qué penitencia te gustaría que las diablas nos pongan si perdemos?": "What penance would you like the she-devils to give us if we lose?",
+ "¿Te excitaría que una diabla nos mirara mientras hacemos lo nuestro?": "Would it turn you on if a she-devil watched us doing our thing?",
+ "¿Te gustaría ver cómo otra persona me hace disfrutar sin que puedas tocarme?": "Would you like to watch another person make me enjoy myself without you being able to touch me?",
+ "¿Qué te excita más de ser cuckold: mirar, esperar o escuchar los detalles después?": "What turns you on most about being a cuckold: watching, waiting, or hearing the details afterward?",
+ "¿Aguantarías mirar de principio a fin cómo otra persona me hace disfrutar, sin interrumpir ni tocarte?": "Could you watch from start to finish how another person makes me enjoy myself, without interrupting or touching yourself?",
+ "¿Quieres que te cuente con detalle todo lo que sentí con otra persona al terminar?": "Do you want me to tell you in detail everything I felt with another person when it's over?",
+ "¿Qué te excita más: que te mire con deseo mientras estoy con otra persona, o que me olvide de ti un rato?": "What turns you on more: me looking at you with desire while I'm with another person, or me forgetting about you for a while?",
+ "¿Qué quieres hacer conmigo justo después de que otra persona me haya dejado agotado/a?": "What do you want to do with me right after another person has left me worn out?",
+ "¿Te excitaría que otra persona me haga cosas que tú nunca me has hecho?": "Would it turn you on if another person does things to me that you've never done?",
+ "¿Cuál es el escenario cuckold más morboso que has imaginado y nunca me has contado?": "What's the dirtiest cuckold scenario you've imagined and never told me?",
+ "¿Qué te gustaría que te prohíba mientras estoy con otra persona: tocarte, hablar o moverte?": "What would you like me to forbid you while I'm with another person: touching yourself, speaking, or moving?",
+ "¿Te gustaría hacer un 'tren', con varias personas atendiéndote una detrás de otra? ¿Cuántas?": "Would you like to do a 'train', with several people taking care of you one after another? How many?",
+ "¿Qué papel te gustaría en un tren: el centro de todo o el que mira?": "What role would you like in a train: the center of it all, or the one watching?",
+ "¿Qué reglas pondrías para un tren: protección siempre, nadie sin permiso, una palabra para parar?": "What rules would you set for a train: protection always, no one without permission, a word to stop?",
+ "¿Te excitaría un gangbang en el que varias personas se turnen para tenerte mientras yo miro de cerca?": "Would it turn you on to have a gangbang where several people take turns having you while I watch up close?",
+ "¿Cuántas personas a la vez serían tu fantasía en un gangbang... y cuántas tu límite?": "How many people at once would be your fantasy in a gangbang... and how many your limit?",
+ "¿Cómo sería tu gangbang perfecto: quién, cuántos, dónde y qué le dirías a cada uno al terminar?": "What would your perfect gangbang look like: who, how many, where, and what would you say to each one afterward?",
+ "¿Qué te excita más de un trío: ser el centro de atención o ver cómo atienden a tu pareja?": "What turns you on more about a threesome: being the center of attention, or watching your partner be taken care of?",
+ "¿Un trío con otro hombre o con otra mujer: cuál prefieres y por qué?": "A threesome with another man or another woman: which do you prefer and why?",
+ "¿Qué quieres que le hagan a tu pareja mientras tú participas o miras?": "What do you want them to do to your partner while you take part or watch?",
+ "¿Hasta dónde llegarías en un intercambio completo? ¿Cuál sería tu límite absoluto?": "How far would you go in a full swap? What would be your absolute limit?",
+ "¿Qué te prende y qué te preocupa de un intercambio completo?": "What turns you on and what worries you about a full swap?",
+ "¿Cuántas personas serían tu fantasía ideal en una sola habitación?": "How many people would be your ideal fantasy in a single room?",
+ "¿Qué es lo más sucio que te gustaría que pase esa noche, sin filtro?": "What's the dirtiest thing you'd like to happen that night, no filter?",
+ "¿Qué necesitas de mí para sentirte seguro/a y a la vez libre con otra persona?": "What do you need from me to feel safe and yet free with another person?",
+ "¿Qué quieres que te susurre mientras otra persona te toca?": "What do you want me to whisper to you while another person touches you?",
+ "¿Te gustaría dirigir a los demás o que te dirijan a ti?": "Would you like to direct the others, or be directed?",
+ "¿Lo harías en la sala común frente a todos? ¿Con la puerta abierta o cerrada?": "Would you do it in the common room in front of everyone? With the door open or closed?",
+ "¿Quién elige a la tercera persona: tú, yo o los dos?": "Who picks the third person: you, me, or both of us?",
+ "¿Cuál es el límite más atrevido que te gustaría romper esa noche?": "What's the boldest limit you'd like to break that night?",
+ "¿Qué detalle de tu fantasía nunca me has contado porque te da pena?": "What detail of your fantasy have you never told me because you feel shy?",
+ "¿Cómo sería la fantasía perfecta de esa noche, paso a paso?": "What would the perfect fantasy of that night look like, step by step?",
+ "¿Prefieres un intercambio en la misma habitación o en habitaciones separadas?": "Do you prefer a swap in the same room or in separate rooms?",
+ "¿Qué te excita más: verme con otra persona o que me vean contigo?": "What turns you on more: watching me with another person, or having others watch me with you?",
+ "¿Qué harías esa noche que jamás te atreverías a hacer en casa?": "What would you do that night that you'd never dare do at home?",
+ "¿Qué es lo más salvaje que quieres que te pida esa noche?": "What's the wildest thing you want me to ask of you that night?",
+ "¿Cuál es el escenario más morboso que te imaginas dentro del club?": "What's the dirtiest scenario you can imagine inside the club?",
+ "¿Qué parte de mi cuerpo quieres que otra persona recorra primero con la boca?": "Which part of my body do you want another person to explore first with their mouth?",
+ "¿Quieres que te diga en voz alta lo que me gustaría que otras personas te hagan?": "Do you want me to say out loud what I'd like other people to do to you?",
+ "¿Te gustaría que nos turnemos con otra pareja, dos y dos, intercambiando cada tanto?": "Would you like us to take turns with another couple, two and two, swapping every so often?",
+ "¿Qué quieres que te hagan hasta que ya no puedas más?": "What do you want done to you until you can't take any more?",
+ "Si tuvieras que conseguirle una mujer a tu pareja esta noche, ¿cómo te le acercarías y qué le dirías para convencerla?": "If you had to find a woman for your partner tonight, how would you approach her and what would you say to convince her?",
+ "¿Qué le dirías al esposo de esa mujer para que te deje ver cómo tu pareja tiene sexo con ella?": "What would you say to that woman's husband so he lets you watch your partner have sex with her?",
+ "¿Cuántas mujeres estarías dispuesto/a a conseguirle a tu pareja para que se acueste con ellas a lo largo de la noche?": "How many women would you be willing to find for your partner to sleep with over the course of the night?",
+ "¿Cuántas mujeres a la vez te excitaría ver encima de tu pareja, y qué querrías que le hicieran?": "How many women at once would turn you on to watch on top of your partner, and what would you want them to do to your partner?",
+ "¿Qué le susurrarías a tu pareja justo antes de que se vaya con la mujer que le conseguiste?": "What would you whisper to your partner right before they leave with the woman you found?",
+ "¿Te excitaría darle órdenes a tu pareja sobre lo que debe hacerle a cada mujer mientras tú miras?": "Would it turn you on to give your partner orders about what to do to each woman while you watch?",
+ "Si nos cruzamos con alguien de talla XL, ¿te gustaría aprovechar la oportunidad y probarlo?": "If we come across someone who's XL, would you like to take the opportunity and try them out?"
+};
+let showEnglish=false;
+try{showEnglish=localStorage.getItem("pecadoEn")==="1"}catch(e){}
+function renderEnglish(){
+  const es=$("questionText").textContent,box=$("questionEn"),btn=$("langBtn");
+  btn.textContent=showEnglish?"🌐 Ocultar inglés":"🌐 English";
+  if(!showEnglish){box.classList.remove("show");box.textContent="";return}
+  box.classList.add("show");
+  const en=EN[es];
+  if(en){box.textContent=en}
+  else{
+    box.innerHTML='<a href="https://translate.google.com/?sl=es&tl=en&op=translate&text='+encodeURIComponent(es)+'" target="_blank" rel="noopener" style="color:#ffd9ec">Translate ↗</a>';
+  }
+}
+function toggleEnglish(){
+  showEnglish=!showEnglish;
+  try{localStorage.setItem("pecadoEn",showEnglish?"1":"0")}catch(e){}
+  renderEnglish();
+}
+
 let players = [];
 let mode = "";
 let currentPlayer = 0;
@@ -1282,6 +1445,7 @@ function showQuestion(){
   $("playerName").textContent="TURNO DE "+players[currentPlayer];
   $("categoryName").textContent=getCategoryName()+" • "+getIntensityName();
   $("questionText").textContent=text;
+  renderEnglish();
   pecadoApplyMechanic();
   const tt=targetedTotals();
   $("counter").textContent=`${used.length+tt.used} / ${list.length+tt.total} preguntas usadas • ${questionNumber+1} en esta sesión`;
