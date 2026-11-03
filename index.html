@@ -55,7 +55,7 @@ button:active{transform:translateY(0)}
 .mode .emoji{font-size:34px}.mode b{display:block;font-size:20px}.mode span{display:block;color:#c19db6;font-size:12px;margin-top:4px}
 .category{padding:23px 16px;font-size:20px}
 .dare{background:linear-gradient(135deg,#ff7b22,#d026ff)}
-.halloween{background:linear-gradient(135deg,#ff6a00,#5a0a8a 60%,#1a0524)}
+.club{background:linear-gradient(135deg,#d4145a,#6a1b9a 55%,#1a0524)}
 .pasado{background:linear-gradient(135deg,#6d2cff,#d026ff)}
 .deseo{background:linear-gradient(135deg,#ff236d,#ff7b22)}
 .trago{background:linear-gradient(135deg,#8e1515,#e52d27)}
@@ -158,7 +158,7 @@ input:focus{border-color:#d43a91;box-shadow:0 0 0 3px rgba(255,40,125,.10)}
     <!-- CATEGORY -->
     <section id="categoryScreen" class="screen">
       <h2>ELIGE TU PECADO</h2>
-      <button class="category halloween" onclick="chooseCategory('halloween')">🎃 HALLOWEEN<small>Antes de la fiesta • Deseos • Límites • Club</small></button>
+      <button class="category club" onclick="chooseCategory('club')">🥂 CLUB SWINGER<small>Fantasías • Límites • Juegos • Club</small></button>
       <button class="category pasado" onclick="chooseCategory('past')">🔥 PASADO<small>Secretos • Experiencias • Primeras veces</small></button>
       <button class="category deseo" onclick="chooseCategory('desire')">😈 DESEO<small>Fantasías • Atracción • Curiosidad</small></button>
       <button class="category trago" onclick="chooseCategory('drink')">🍷 TRAGO<small>Retos • Confesiones • Castigos</small></button>
@@ -933,13 +933,13 @@ questions.past.pecado.push(...NUEVAS.past.pecado);
 questions.desire.spicy.push(...NUEVAS.desire.spicy);
 questions.desire.pecado.push(...NUEVAS.desire.pecado);
 
-/* ===== HALLOWEEN (club) ===== */
-questions.halloween={
+/* ===== CLUB SWINGER ===== */
+questions.club={
   warm:[
-  "¿Qué es lo que más te emociona de ir al club en Halloween?",
+  "¿Qué es lo que más te emociona de ir al club?",
   "¿Qué te pone más nervioso: mirar, que te miren o participar?",
-  "¿Qué disfraz quieres que yo lleve para volverte loco/a?",
-  "¿Qué disfraz tuyo crees que va a llamar más la atención?",
+  "¿Qué outfit quieres que yo lleve para volverte loco/a?",
+  "¿Qué outfit tuyo crees que va a llamar más la atención?",
   "¿Prefieres llegar, mirar y tomar algo con calma, o lanzarte desde el primer minuto?",
   "¿Qué tipo de persona o pareja te gustaría que se nos acercara primero?",
   "¿Qué harías si alguien me coquetea frente a ti?",
@@ -954,7 +954,7 @@ questions.halloween={
   "¿Qué quieres que te susurre antes de separarnos un rato?",
   "¿Estarías más cómodo/a con que bese a otra persona o con que toque a otra persona?",
   "¿Qué te da más seguridad: no separarnos nunca o poder separarnos un rato?",
-  "¿Qué quieres que hagamos al llegar a casa después de la fiesta?",
+  "¿Qué quieres que hagamos al llegar a casa después del club?",
   "¿Qué cosa nuestra crees que va a impresionar a los demás?",
   "¿Qué te da curiosidad ver en un club y nunca has visto?",
   "¿Cómo manejamos que uno de los dos se sienta incómodo a media noche?",
@@ -963,7 +963,7 @@ questions.halloween={
   "¿Dejarías que otra persona te bese el cuello mientras yo miro?",
   "¿Qué tan pronto en la noche te gustaría que pase algo?",
   "¿Prefieres pasar a otro nivel con alguien que ya conocemos o con completos desconocidos?",
-  "¿Qué parte de mi cuerpo quieres que luzca más con mi disfraz?",
+  "¿Qué parte de mi cuerpo quieres que luzca más con mi outfit?",
   "¿Quieres que yo te escoja a alguien, o prefieres escoger tú?",
   "¿Qué regla nueva quieres que pongamos antes de llegar?"
 ],
@@ -1000,10 +1000,10 @@ questions.halloween={
   "¿Qué es lo más morboso que te gustaría ver a otra pareja hacer?"
 ],
   pecado:[
-  "¿Qué es lo más atrevido que les pedirías a las diablas que nos hagan hacer?",
-  "¿Qué prueba sucia te gustaría ganar en la gran final?",
-  "¿Qué penitencia te gustaría que las diablas nos pongan si perdemos?",
-  "¿Te excitaría que una diabla nos mirara mientras hacemos lo nuestro?",
+  "¿Qué es lo más atrevido que le pedirías a otra pareja que haga frente a nosotros?",
+  "¿Qué prueba sucia te gustaría que otra pareja nos proponga?",
+  "¿Qué penitencia sexy aceptarías si pierdes un juego con otra pareja?",
+  "¿Te excitaría que alguien nos mirara mientras hacemos lo nuestro?",
   "¿Te gustaría ver cómo otra persona me hace disfrutar sin que puedas tocarme?",
   "¿Qué te excita más de ser cuckold: mirar, esperar o escuchar los detalles después?",
   "¿Aguantarías mirar de principio a fin cómo otra persona me hace disfrutar, sin interrumpir ni tocarte?",
@@ -1046,32 +1046,32 @@ questions.halloween={
 ]
 };
 
-/* ===== HALLOWEEN: Las Diablas ===== */
-questions.halloween.warm.push(...[
-  "Dos diablas van a recorrer los tres niveles buscando parejas para jugar: ¿quieres que nos encuentren pronto o prefieres esconderte un rato?",
-  "Si una diabla nos invita a un concurso, ¿decimos que sí de inmediato o lo pensamos?",
-  "¿En qué concurso te gustaría que ganáramos con nuestros disfraces?",
-  "¿Qué parte de nuestros disfraces crees que más va a llamar la atención de las diablas?",
-  "¿Qué juego suave te gustaría que las diablas nos propongan para romper el hielo?",
-  "¿Qué estarías dispuesto/a a hacer para llegar a la gran final?",
-  "¿Qué premio ganarías sin dudar?",
-  "¿En qué nivel del club te gustaría que nos encuentren las diablas primero?",
-  "¿Qué señal usamos si no queremos participar en un juego que nos proponga una diabla?",
-  "¿Quieres que las diablas se fijen en nosotros o prefieres pasar desapercibido hasta el final?"
+/* ===== CLUB SWINGER: juegos y ambiente ===== */
+questions.club.warm.push(...[
+  "Si una pareja se acerca a presentarse, ¿prefieres hablar tú o que hable yo?",
+  "¿Qué es lo primero que quieres que hagamos al entrar: recorrer el club, ir a la barra o sentarnos a observar?",
+  "¿Qué espacio del club te da más curiosidad conocer primero?",
+  "¿Qué hacemos si alguien nos propone jugar y uno de los dos no quiere? ¿Cómo lo decimos con cariño?",
+  "¿Qué señal usamos si uno quiere un respiro y el otro quiere seguir?",
+  "¿Qué ambiente te gusta más: música fuerte y baile, o algo más tranquilo para conversar?",
+  "¿Qué te gustaría que supieran de nosotros antes de conocernos mejor?",
+  "¿Quieres que conozcamos primero a otras parejas o a personas solteras?",
+  "¿Qué harías si alguien nos invita a una zona privada?",
+  "¿Cuánto tiempo quieres quedarte antes de decidir si pasa algo?"
 ]);
-questions.halloween.spicy.push(...[
-  "¿Qué juego le propondrías a las diablas para poner a prueba a nuestra pareja?",
-  "¿Te gustaría un concurso de baile sensual con las diablas como jurado?",
+questions.club.spicy.push(...[
+  "¿Qué juego le propondrías a otra pareja para conocernos mejor y calentar el ambiente?",
+  "¿Te gustaría un baile sensual en la pista frente a otras parejas?",
   "¿Competiríamos por el mejor beso de la noche frente a todos?",
-  "¿Dejarías que una diabla te vende los ojos para adivinar quién te besa?",
-  "¿Te gustaría que las diablas nos reten a otra pareja?",
-  "¿Qué reto en pareja te daría más morbo hacer frente al público?",
-  "¿Hasta dónde te quitarías el disfraz para ganar un concurso?",
-  "¿Quieres que las diablas nos separen para un juego y luego nos reencuentren?",
-  "¿Te gustaría que una diabla te susurre una orden que solo tú puedes cumplir?",
-  "¿Qué reto de seducción me pondrías delante de las diablas?"
+  "¿Dejarías que otra persona te vende los ojos para adivinar quién te besa?",
+  "¿Te gustaría que otra pareja nos rete a un juego atrevido?",
+  "¿Qué reto en pareja te daría más morbo hacer frente a otras personas?",
+  "¿Hasta dónde te quitarías la ropa en un juego con otra pareja?",
+  "¿Quieres que nos separemos para un juego y luego nos reencontremos?",
+  "¿Te gustaría que otra persona te susurre una orden que solo tú puedes cumplir?",
+  "¿Qué reto de seducción me pondrías delante de otras personas?"
 ]);
-questions.halloween.spicy.push(...[
+questions.club.spicy.push(...[
   "¿Te excitaría ser el centro de atención de varias personas a la vez?",
   "¿Te gustaría ver a otros hacer un 'tren' antes de decidir si quieres probarlo?",
   "¿Qué te parece la idea de que varias personas se turnen para atenderte?"
@@ -1088,7 +1088,7 @@ questions.halloween.spicy.push(...[
    jugador, copia el bloque con su nombre en minúsculas. */
 const targetedQuestions = {
   "magdiel": {
-    halloween: {
+    club: {
       pecado: [
       "Si tuvieras que conseguirle una mujer a tu pareja esta noche, ¿cómo te le acercarías y qué le dirías para convencerla?",
       "¿Qué le dirías al esposo de esa mujer para que te deje ver cómo tu pareja tiene sexo con ella?",
@@ -1106,13 +1106,10 @@ let targetPlan = {};
 function normName(n){return String(n||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase()}
 
 /* ===== Traducción al inglés (botón 🌐) =====
-   EN guarda la traducción de cada pregunta de Halloween. Las preguntas
+   EN guarda la traducción de cada pregunta del modo Club Swinger. Las preguntas
    sin traducción muestran un enlace a Google Translate. */
 const EN = {
- "¿Qué es lo que más te emociona de ir al club en Halloween?": "What are you most excited about for going to the club on Halloween?",
  "¿Qué te pone más nervioso: mirar, que te miren o participar?": "What makes you more nervous: watching, being watched, or taking part?",
- "¿Qué disfraz quieres que yo lleve para volverte loco/a?": "What costume do you want me to wear to drive you wild?",
- "¿Qué disfraz tuyo crees que va a llamar más la atención?": "Which of your costume pieces do you think will turn the most heads?",
  "¿Prefieres llegar, mirar y tomar algo con calma, o lanzarte desde el primer minuto?": "Would you rather arrive, watch and sip a drink calmly, or dive in from the first minute?",
  "¿Qué tipo de persona o pareja te gustaría que se nos acercara primero?": "What kind of person or couple would you like to approach us first?",
  "¿Qué harías si alguien me coquetea frente a ti?": "What would you do if someone flirted with me in front of you?",
@@ -1127,7 +1124,6 @@ const EN = {
  "¿Qué quieres que te susurre antes de separarnos un rato?": "What do you want me to whisper to you before we separate for a while?",
  "¿Estarías más cómodo/a con que bese a otra persona o con que toque a otra persona?": "Would you be more comfortable with me kissing another person or with me touching another person?",
  "¿Qué te da más seguridad: no separarnos nunca o poder separarnos un rato?": "What makes you feel safer: never separating, or being able to split up for a while?",
- "¿Qué quieres que hagamos al llegar a casa después de la fiesta?": "What do you want us to do when we get home after the party?",
  "¿Qué cosa nuestra crees que va a impresionar a los demás?": "What is it about the two of us that you think will impress everyone else?",
  "¿Qué te da curiosidad ver en un club y nunca has visto?": "What are you curious to see at a club that you've never seen?",
  "¿Cómo manejamos que uno de los dos se sienta incómodo a media noche?": "How do we handle it if one of us feels uncomfortable in the middle of the night?",
@@ -1136,19 +1132,8 @@ const EN = {
  "¿Dejarías que otra persona te bese el cuello mientras yo miro?": "Would you let another person kiss your neck while I watch?",
  "¿Qué tan pronto en la noche te gustaría que pase algo?": "How soon in the night would you like something to happen?",
  "¿Prefieres pasar a otro nivel con alguien que ya conocemos o con completos desconocidos?": "Would you rather take things further with someone we already know or with complete strangers?",
- "¿Qué parte de mi cuerpo quieres que luzca más con mi disfraz?": "Which part of my body do you want my costume to show off the most?",
  "¿Quieres que yo te escoja a alguien, o prefieres escoger tú?": "Do you want me to pick someone for you, or would you rather pick yourself?",
  "¿Qué regla nueva quieres que pongamos antes de llegar?": "What new rule do you want us to set before we arrive?",
- "Dos diablas van a recorrer los tres niveles buscando parejas para jugar: ¿quieres que nos encuentren pronto o prefieres esconderte un rato?": "Two she-devils will roam all three levels looking for couples to play with: do you want them to find us soon, or would you rather hide for a while?",
- "Si una diabla nos invita a un concurso, ¿decimos que sí de inmediato o lo pensamos?": "If a she-devil invites us to a contest, do we say yes right away or think about it?",
- "¿En qué concurso te gustaría que ganáramos con nuestros disfraces?": "Which contest would you like us to win with our costumes?",
- "¿Qué parte de nuestros disfraces crees que más va a llamar la atención de las diablas?": "Which part of our costumes do you think will catch the she-devils' eye the most?",
- "¿Qué juego suave te gustaría que las diablas nos propongan para romper el hielo?": "What gentle game would you like the she-devils to give us to break the ice?",
- "¿Qué estarías dispuesto/a a hacer para llegar a la gran final?": "What would you be willing to do to make it to the grand final?",
- "¿Qué premio ganarías sin dudar?": "What prize would you win without hesitation?",
- "¿En qué nivel del club te gustaría que nos encuentren las diablas primero?": "On which level of the club would you like the she-devils to find us first?",
- "¿Qué señal usamos si no queremos participar en un juego que nos proponga una diabla?": "What signal do we use if we don't want to take part in a game a she-devil proposes?",
- "¿Quieres que las diablas se fijen en nosotros o prefieres pasar desapercibido hasta el final?": "Do you want the she-devils to notice us, or would you rather go unnoticed until the end?",
  "¿Te excita que otras personas nos miren mientras nos besamos?": "Does it turn you on when other people watch us kiss?",
  "¿Te dejarías tocar por otra persona mientras yo miro?": "Would you let another person touch you while I watch?",
  "¿Qué parte de tu cuerpo te gustaría que otra persona besara mientras yo miro?": "Which part of your body would you like another person to kiss while I watch?",
@@ -1179,23 +1164,9 @@ const EN = {
  "¿Cuál sería tu primer movimiento con alguien que te atrae?": "What would be your first move with someone who attracts you?",
  "¿Te gustaría que te agarren por sorpresa de la mano y te lleven a un cuarto?": "Would you like to be grabbed by the hand by surprise and taken to a room?",
  "¿Qué es lo más morboso que te gustaría ver a otra pareja hacer?": "What's the most deliciously naughty thing you'd like to watch another couple do?",
- "¿Qué juego le propondrías a las diablas para poner a prueba a nuestra pareja?": "What game would you propose to the she-devils to put our relationship to the test?",
- "¿Te gustaría un concurso de baile sensual con las diablas como jurado?": "Would you like a sensual dance contest with the she-devils as judges?",
- "¿Competiríamos por el mejor beso de la noche frente a todos?": "Would we compete for the best kiss of the night in front of everyone?",
- "¿Dejarías que una diabla te vende los ojos para adivinar quién te besa?": "Would you let a she-devil blindfold you to guess who's kissing you?",
- "¿Te gustaría que las diablas nos reten a otra pareja?": "Would you like the she-devils to challenge us against another couple?",
- "¿Qué reto en pareja te daría más morbo hacer frente al público?": "What couple's challenge would turn you on most to do in front of an audience?",
- "¿Hasta dónde te quitarías el disfraz para ganar un concurso?": "How much of your costume would you take off to win a contest?",
- "¿Quieres que las diablas nos separen para un juego y luego nos reencuentren?": "Do you want the she-devils to separate us for a game and then bring us back together?",
- "¿Te gustaría que una diabla te susurre una orden que solo tú puedes cumplir?": "Would you like a she-devil to whisper an order that only you can carry out?",
- "¿Qué reto de seducción me pondrías delante de las diablas?": "What seduction challenge would you give me in front of the she-devils?",
  "¿Te excitaría ser el centro de atención de varias personas a la vez?": "Would it turn you on to be the center of attention of several people at once?",
  "¿Te gustaría ver a otros hacer un 'tren' antes de decidir si quieres probarlo?": "Would you like to watch others do a 'train' before deciding whether you want to try it?",
  "¿Qué te parece la idea de que varias personas se turnen para atenderte?": "What do you think of the idea of several people taking turns pleasing you?",
- "¿Qué es lo más atrevido que les pedirías a las diablas que nos hagan hacer?": "What is the boldest thing you would ask the she-devils to make us do?",
- "¿Qué prueba sucia te gustaría ganar en la gran final?": "What dirty challenge would you like to win in the grand final?",
- "¿Qué penitencia te gustaría que las diablas nos pongan si perdemos?": "What penance would you like the she-devils to give us if we lose?",
- "¿Te excitaría que una diabla nos mirara mientras hacemos lo nuestro?": "Would it turn you on if a she-devil watched us doing our thing?",
  "¿Te gustaría ver cómo otra persona me hace disfrutar sin que puedas tocarme?": "Would you like to watch another person make me enjoy myself without you being able to touch me?",
  "¿Qué te excita más de ser cuckold: mirar, esperar o escuchar los detalles después?": "What turns you on most about being a cuckold: watching, waiting, or hearing the details afterward?",
  "¿Aguantarías mirar de principio a fin cómo otra persona me hace disfrutar, sin interrumpir ni tocarte?": "Could you watch from start to finish how another person makes me enjoy myself, without interrupting or touching yourself?",
@@ -1241,7 +1212,36 @@ const EN = {
  "¿Cuántas mujeres a la vez te excitaría ver encima de tu pareja, y qué querrías que le hicieran?": "How many women at once would turn you on to watch on top of your partner, and what would you want them to do to your partner?",
  "¿Qué le susurrarías a tu pareja justo antes de que se vaya con la mujer que le conseguiste?": "What would you whisper to your partner right before they leave with the woman you found?",
  "¿Te excitaría darle órdenes a tu pareja sobre lo que debe hacerle a cada mujer mientras tú miras?": "Would it turn you on to give your partner orders about what to do to each woman while you watch?",
- "Si nos cruzamos con alguien de talla XL, ¿te gustaría aprovechar la oportunidad y probarlo?": "If we come across someone who's XL, would you like to take the opportunity and try them out?"
+ "Si nos cruzamos con alguien de talla XL, ¿te gustaría aprovechar la oportunidad y probarlo?": "If we come across someone who's XL, would you like to take the opportunity and try them out?",
+ "¿Qué es lo que más te emociona de ir al club?": "What are you most excited about for going to the club?",
+ "¿Qué outfit quieres que yo lleve para volverte loco/a?": "What outfit do you want me to wear to drive you wild?",
+ "¿Qué outfit tuyo crees que va a llamar más la atención?": "Which of your outfits do you think will turn the most heads?",
+ "¿Qué quieres que hagamos al llegar a casa después del club?": "What do you want us to do when we get home after the club?",
+ "¿Qué parte de mi cuerpo quieres que luzca más con mi outfit?": "Which part of my body do you want my outfit to show off the most?",
+ "Si una pareja se acerca a presentarse, ¿prefieres hablar tú o que hable yo?": "If a couple comes over to introduce themselves, would you rather talk or have me do the talking?",
+ "¿Qué es lo primero que quieres que hagamos al entrar: recorrer el club, ir a la barra o sentarnos a observar?": "What's the first thing you want us to do when we walk in: tour the club, go to the bar, or sit and observe?",
+ "¿Qué espacio del club te da más curiosidad conocer primero?": "Which space in the club are you most curious to see first?",
+ "¿Qué hacemos si alguien nos propone jugar y uno de los dos no quiere? ¿Cómo lo decimos con cariño?": "What do we do if someone proposes playing and one of us doesn't want to? How do we say it kindly?",
+ "¿Qué señal usamos si uno quiere un respiro y el otro quiere seguir?": "What signal do we use if one of us wants a break and the other wants to keep going?",
+ "¿Qué ambiente te gusta más: música fuerte y baile, o algo más tranquilo para conversar?": "Which vibe do you like more: loud music and dancing, or something calmer for conversation?",
+ "¿Qué te gustaría que supieran de nosotros antes de conocernos mejor?": "What would you like people to know about us before they get to know us better?",
+ "¿Quieres que conozcamos primero a otras parejas o a personas solteras?": "Do you want us to meet other couples first, or single people?",
+ "¿Qué harías si alguien nos invita a una zona privada?": "What would you do if someone invites us to a private area?",
+ "¿Cuánto tiempo quieres quedarte antes de decidir si pasa algo?": "How long do you want to stay before deciding whether anything happens?",
+ "¿Qué juego le propondrías a otra pareja para conocernos mejor y calentar el ambiente?": "What game would you propose to another couple to get to know each other and heat things up?",
+ "¿Te gustaría un baile sensual en la pista frente a otras parejas?": "Would you like a sensual dance on the floor in front of other couples?",
+ "¿Competiríamos por el mejor beso de la noche frente a todos?": "Would we compete for the best kiss of the night in front of everyone?",
+ "¿Dejarías que otra persona te vende los ojos para adivinar quién te besa?": "Would you let someone else blindfold you to guess who's kissing you?",
+ "¿Te gustaría que otra pareja nos rete a un juego atrevido?": "Would you like another couple to challenge us to a daring game?",
+ "¿Qué reto en pareja te daría más morbo hacer frente a otras personas?": "What couple's challenge would turn you on most to do in front of other people?",
+ "¿Hasta dónde te quitarías la ropa en un juego con otra pareja?": "How much clothing would you take off in a game with another couple?",
+ "¿Quieres que nos separemos para un juego y luego nos reencontremos?": "Do you want us to split up for a game and then find each other again?",
+ "¿Te gustaría que otra persona te susurre una orden que solo tú puedes cumplir?": "Would you like someone else to whisper an order that only you can carry out?",
+ "¿Qué reto de seducción me pondrías delante de otras personas?": "What seduction challenge would you give me in front of other people?",
+ "¿Qué es lo más atrevido que le pedirías a otra pareja que haga frente a nosotros?": "What's the boldest thing you'd ask another couple to do in front of us?",
+ "¿Qué prueba sucia te gustaría que otra pareja nos proponga?": "What dirty challenge would you like another couple to propose to us?",
+ "¿Qué penitencia sexy aceptarías si pierdes un juego con otra pareja?": "What sexy penance would you accept if you lose a game with another couple?",
+ "¿Te excitaría que alguien nos mirara mientras hacemos lo nuestro?": "Would it turn you on if someone watched us doing our thing?"
 };
 let showEnglish=false;
 try{showEnglish=localStorage.getItem("pecadoEn")==="1"}catch(e){}
@@ -1277,7 +1277,7 @@ let usedQuestions = {
   past:{warm:[],spicy:[],pecado:[]},
   desire:{warm:[],spicy:[],pecado:[]},
   drink:{warm:[],spicy:[],pecado:[]},
-  halloween:{warm:[],spicy:[],pecado:[]},
+  club:{warm:[],spicy:[],pecado:[]},
   dare:{warm:[],spicy:[],pecado:[]}
 };
 
@@ -1362,7 +1362,7 @@ function finishSetup(){
 }
 
 function freshUsed(){
-  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]},halloween:{warm:[],spicy:[],pecado:[]},dare:{warm:[],spicy:[],pecado:[]}};
+  return {past:{warm:[],spicy:[],pecado:[]},desire:{warm:[],spicy:[],pecado:[]},drink:{warm:[],spicy:[],pecado:[]},club:{warm:[],spicy:[],pecado:[]},dare:{warm:[],spicy:[],pecado:[]}};
 }
 
 function showCategoryScreen(){showScreen("categoryScreen")}
@@ -1377,7 +1377,7 @@ function chooseIntensity(intensity){
 
 function getQuestions(){return questions[currentCategory][currentIntensity]}
 function getCategoryName(){
-  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO",dare:"🔥 RETO",halloween:"🎃 HALLOWEEN"}[currentCategory];
+  return {past:"🔥 PASADO",desire:"😈 DESEO",drink:"🍷 TRAGO",dare:"🔥 RETO",club:"🥂 CLUB SWINGER"}[currentCategory];
 }
 function getIntensityName(){
   return {warm:"🌶️ CALIENTE",spicy:"🌶️🌶️ MUY PICANTE",pecado:"🌶️🌶️🌶️ PÉCADO"}[currentIntensity];
@@ -1505,6 +1505,9 @@ function continueGame(){
   if(!d)return;
   ({players,mode,currentPlayer,currentCategory,currentIntensity,questionNumber,drinkCount,skipCount,dareCount,usedQuestions,sessionStarted}=d);
   usedTargeted=d.usedTargeted||{};targetPlan=d.targetPlan||{};
+  if(currentCategory==="halloween")currentCategory="club";
+  if(usedQuestions&&usedQuestions.halloween){usedQuestions.club=usedQuestions.halloween;delete usedQuestions.halloween}
+  usedTargeted={};targetPlan={};
   if(!players?.length)return;
   if(!currentCategory || !currentIntensity) showScreen("categoryScreen");
   else {showScreen("gameScreen");showQuestion()}
